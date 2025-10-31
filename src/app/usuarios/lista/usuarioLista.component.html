@@ -1,0 +1,178 @@
+<ng-template #customLoadingTemplate>
+</ng-template>
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de usuarios</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form #filtroForm="ngForm" class="pb-3">
+          <div class="d-flex justify-content-start bg-light p-3 border gap-3 sli">
+            <div class="form-group">
+              <small class="form-text">Ordenar por</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="usuarioFiltro.ordenCriterio"
+                name="ordenCriterio">
+                <option value="nombres">Nombres y apellidos</option>
+                <option value="fecha">Fecha de registro</option>
+
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small class="form-text">&nbsp;</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="usuarioFiltro.ordenTipo" name="ordenTipo">
+                <option value="asc">Asc</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small class="form-text">Buscar por</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="usuarioFiltro.parametro" name="parametro">
+
+                <option value="nombres">Nombres</option>
+                <option value="login">Login</option>
+                <option value="correo">Correo</option>
+
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small class="form-text">&nbsp;</small>
+              <input type="search" class="form-control" [(ngModel)]="usuarioFiltro.valor" name="valor" placeholder="">
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estados</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="usuarioFiltro.idEstado" name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                @for(estado of estados; track $index){
+                <option [ngValue]="estado.idEstado">{{ estado.nombre }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Perfiles</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="usuarioFiltro.idPerfil" name="idPerfil">
+                <option [ngValue]="0">Todos</option>
+                @for(perfil of perfiles; track $index){
+                <option [ngValue]="perfil.idPerfil">{{ perfil.nombre }}</option>
+                }
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar
+              </button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start gap-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/usuarios/editar']">
+            <fa-icon [icon]="faList"></fa-icon>
+
+            Nuevo usuario</button>
+
+
+
+          <a class="btn btn-secondary">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+
+            Regresar</a>
+          <div class="form-group">
+            <select class="form-select  custom-select float-right" [(ngModel)]="usuarioFiltro.registros"
+              name="registros" (ngModelChange)="actualizarPaginacion()">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="30">30</option>
+              <option [ngValue]="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Nombres</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Correo</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Perfil</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Login</a></th>
+                <th style="width: 120px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Estado</a>
+                </th>
+                <th style="width: 120px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Fecha</a>
+                </th>
+                <th style="width: 120px;" scope="col" class="text-right"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (usuario of usuarios; track $index) {
+
+              <tr>
+                <td class="text-left">
+                  {{usuario.nombres}} {{usuario.pApellido}} {{usuario.sApellido}}
+                </td>
+                <td class="text-left">
+                  {{usuario.correo}}
+                </td>
+                <td class="text-left">
+                  {{usuario.perfil.nombre}}
+                </td>
+                <td class="text-left">{{ usuario.login }} </td>
+
+                <td class="text-center">{{ usuario.estado.nombre}}</td>
+                <td class="text-center">{{ usuario.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/usuarios/editar/' + usuario.idUsuario]" class="px-2" placement="left"
+                    ngbTooltip="Editar usuario">
+                    <fa-icon [icon]="faPencil"></fa-icon>
+                  </a>
+
+                  <a href="javascript:void(0);" (click)="eliminar(usuario)" class="px-2" placement="left"
+                    ngbTooltip="Eliminar usuario">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a>
+                </td>
+              </tr>
+              }
+              @if(usuarios.length == 0){
+              <tr>
+                <td colspan="9">
+                  <p class="text-center">No hay usuarios existentes.</p>
+                </td>
+              </tr>
+              }
+
+            </tbody>
+          </table>
+
+          <paginator class="d-flex justify-content-end" [paginator]="paginator()" (childEvent)="cambiarPagina($event)" />
+
+
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,4 @@
+::ng-deep .ventanaResultadoCargaMasiva .modal-dialog { 
+    max-width: 50%;
+    width: 50%;
+}

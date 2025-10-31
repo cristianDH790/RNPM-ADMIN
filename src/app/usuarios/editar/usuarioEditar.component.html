@@ -1,0 +1,208 @@
+<ng-template #customLoadingTemplate>
+</ng-template>
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #usuarioForm="ngForm">
+
+          <h5 class="card-title m-t-15">Datos personales:</h5>
+          <!--/row-->
+
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('nombres',1)">
+                <label class="control-label">Nombres * <small
+                    class="help-block">{{validarError('nombres',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombres">
+              </div>
+            </div>
+
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('pApellido',1)">
+                <label class="control-label">Primer apellido * <small
+                    class="help-block">{{validarError('pApellido',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="usuario.pApellido" name="pApellido">
+              </div>
+            </div>
+          </div>
+          <!--/row-->
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('sApellido',1)">
+                <label class="control-label">Segundo apellido <small
+                    class="help-block">{{validarError('sApellido',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="usuario.sApellido" name="sApellido">
+              </div>
+            </div>
+
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('sexo',1)">
+                <label class="control-label">Sexo * <small class="help-block">{{validarError('sexo',2)}}</small></label>
+                <div class="d-flex gap-3">
+                  <div>
+                    <input type="radio" class="custom-control-input mx-2" style="height: auto;"
+                      [(ngModel)]="usuario.sexo" value="M" name="sexo" id="sexo1" required>
+                    <label class="custom-control-label" for="sexo1"> Masculino</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input mx-2" style="height: auto;"
+                      [(ngModel)]="usuario.sexo" value="F" name="sexo" id="sexo2" required>
+                    <label class="custom-control-label" for="sexo2"> Femenino</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--/row-->
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('pdocumento',1)">
+                <label class="control-label">Tipo de documento <small>{{validarError('pdocumento',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="usuario.pdocumento" [compareWith]="compararParametro"
+                  name="pdocumento" id="pdocumento" tabindex="1">
+                  @for (pdocumento of pdocumentos; track $index) {
+                  <option [ngValue]="pdocumento">
+                    {{ pdocumento.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('documento',1)">
+                <label class="control-label">Documento * <small>{{validarError('documento',2)}}</small></label>
+                <input type="text" class="form-control form-control-danger" (keyup)="keyup($event.target)"
+                  [(ngModel)]="usuario.documento" name="documento" id="documento">
+              </div>
+            </div>
+          </div>
+
+          <!--/row-->
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('correo',1)">
+                <label class="control-label">Correo electrónico * <small>{{validarError('correo',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="usuario.correo" name="correo">
+              </div>
+            </div>
+
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('telefono',1)">
+                <label class="control-label">Celular (ingresar sólo números) *
+                  <small>{{validarError('telefono',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="usuario.telefono" name="telefono">
+              </div>
+            </div>
+          </div>
+          <!--/row-->
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('fechaNacimiento',1)">
+                <label class="control-label">Fecha de nacimiento
+                  <small>{{validarError('fechaNacimiento',2)}}</small></label>
+                <input type="date" class="form-control" [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento">
+              </div>
+            </div>
+
+          </div>
+
+          <h5 class="card-title pt-4">Información de acceso y perfil:</h5>
+          <!--/row-->
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger">
+                <label class="control-label">Perfil</label>
+                <select class="form-select mr-sm-2" [(ngModel)]="usuario.perfil" [compareWith]="compararPerfil"
+                  name="perfil" id="perfil" tabindex="1">
+                  @for (perfil of perfiles; track $index) {
+
+                  <option [ngValue]="perfil">
+                    {{ perfil.nombre }}
+                  </option>
+                  }
+
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger">
+                <label class="control-label">Estado</label>
+                <select class="form-select mr-sm-2" [(ngModel)]="usuario.estado" [compareWith]="compararEstado"
+                  name="estado" id="estado" tabindex="1">
+                  @for (estado of estados; track $index) {
+                  <option [ngValue]="estado">
+                    {{ estado.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('login',1)">
+                <label class="control-label">Login * <small>{{validarError('login',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="usuario.login" name="login" autocomplete="false">
+              </div>
+            </div>
+
+            <div class="col-md-6 pt-3">
+              <div class="form-group has-danger" [class]="validarError('password',1)">
+                <label class="control-label">Contraseña * <small>{{validarError('password',2)}}</small></label>
+                <input type="password" class="form-control" [(ngModel)]="usuario.password" name="password"
+                  autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <!--/row-->
+
+
+          <div class="row">
+            @if (usuario.idUsuario > 0) {
+            <div class="col-md-6 pt-3">
+              <div class="form-group">
+                <label class="control-label">Fecha de registro</label>
+                <input type="text" class="form-control" name="fecha" value="{{usuario.fecha | date: 'dd/MM/yyyy'}}"
+                  disabled>
+              </div>
+            </div>
+            }
+          </div>
+
+
+          <!--/row-->
+
+
+          <div class="form-actions py-3 d-flex gap-3">
+            <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+              <fa-icon [icon]="faCheck"></fa-icon>
+
+              Guardar</button>
+
+            <a [routerLink]="['/usuarios/lista']" class="btn btn-secondary">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+
+              Regresar</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->

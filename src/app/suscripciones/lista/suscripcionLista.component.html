@@ -1,0 +1,146 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading"
+  [config]="{ 'primaryColour': '#d63384 ', 'secondaryColour': '#d63384 ','tertiaryColour': '#d63384 ', backdropBorderRadius: '3px' }"
+  [template]="customLoadingTemplate"></ngx-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de suscripciones</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <!-- ngb-alert *ngIf="!staticAlertClosed" type="success" (close)="staticAlertClosed = true">
+                    <strong>Confirmación</strong>
+                    El cliente se creó correctamente.
+                </ngb-alert -->
+
+        <form #filtroForm="ngForm">
+          <div class="d-flex justify-content-start bg-light border gap-3 py-3 px-3 sli">
+            <div class="form-group">
+              <small id="name" class="form-text">Ordenar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="suscripcionFiltro.ordenCriterio"
+                name="ordenCriterio">
+                <option value="correo">Correo</option>
+                <option value="fecha">Fecha de registro</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="suscripcionFiltro.ordenTipo"
+                name="ordenSuscripcion">
+                <option selected value="asc">Asc</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Buscar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="suscripcionFiltro.parametro"
+                name="parametro">
+                <option value="correo">Correo</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <input type="text" class="form-control" [(ngModel)]="suscripcionFiltro.valor" name="valor" placeholder="">
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estado</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="suscripcionFiltro.idEstado"
+                name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                <option *ngFor="let estado of estados" [ngValue]="estado.idEstado">{{ estado.nombre }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()"> <fa-icon [icon]="faSearch"></fa-icon> Buscar</button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()"> <fa-icon [icon]="faRefresh"></fa-icon></button>
+            </div>
+          </div>
+        </form>
+
+
+        <div class="d-flex justify-content-start mt-3 gap-3">
+
+            <button type="button" class="btn btn-primary" [routerLink]="['/suscripciones/editar']"> <fa-icon [icon]="faList"></fa-icon> Nueva suscripción</button>
+            <!-- <button type="button" class="btn btn-primary" (click)="reporte(suscripcionFiltro)"><i class="fa fa-file-excel"></i>
+                                Exportar a MS Excel</button> -->
+<button type="button" class="btn btn-primary" (click)="reporte(suscripcionFiltro)" > <fa-icon [icon]="faList"></fa-icon>Reporte</button>
+
+            <a [routerLink]="['/dashboard/inicio']" class="btn btn-secondary">  <fa-icon [icon]="faArrowLeft"></fa-icon>
+              Regresar</a>
+
+          <div class="form-group">
+            <select class="form-control form-select custom-select float-right" [(ngModel)]="suscripcionFiltro.registros"
+              name="registros" (ngModelChange)="actualizarPaginacion($event)">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+              <option [ngValue]="0">Todos</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th class="text-left" scope="col"><a class="ng2-smart-sort-link sort">Correo</a></th>
+                <th class="text-left" scope="col"><a class="ng2-smart-sort-link sort">Teléfono</a></th>
+
+
+                <th scope="col" class="text-center" style="width:100px"><a class="ng2-smart-sort-link sort">Estado</a>
+                </th>
+                <th scope="col" class="text-left" style="width:100px"><a class="ng2-smart-sort-link sort">Fecha</a></th>
+                <th scope="col" class="text-right" style="width:120px"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let suscripcion of suscripciones; index as i">
+
+                <td>{{ suscripcion.correo }}</td>
+                <td>{{ suscripcion.telefono }}</td>
+
+                <td class="text-center">{{ suscripcion.estado.nombre }} </td>
+                <td class="text-center">{{ suscripcion.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/suscripciones/editar/', suscripcion.idSuscripcion]" class="mx-2" placement="left"
+                     ngbTooltip="Editar suscripcion"> <fa-icon [icon]="faPencil"></fa-icon></a>
+
+                  <a href="javascript:void(0);" (click)="eliminar(suscripcion)" class="mx-2" placement="left"
+                    ngbTooltip="Eliminar suscripcion">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a>
+
+                </td>
+              </tr>
+
+              <tr *ngIf="suscripciones.length == 0">
+                <td colspan="6">
+                  <p class="text-center">No hay suscripciones existentes.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <paginator class="d-flex justify-content-end" [paginator]="paginator()"
+            (childEvent)="cambiarPagina($event)" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

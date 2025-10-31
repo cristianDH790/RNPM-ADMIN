@@ -1,0 +1,78 @@
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(assets/images/background/login-register.jpg) no-repeat center center;">
+    <div class="auth-box on-sidebar m-3 m-md-0">
+        <div id="loginform" [ngClass]="{'d-none': recoverform}">
+            <div class="text-center">
+                <span class="db"><img src="assets/images/logos/xtreme-dark-icon.svg" alt="logo" /></span>
+                <h5 class="font-medium mb-4">Sign In to Admin</h5>
+            </div>
+            <!-- Form -->
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-horizontal mt-3" id="loginform">
+                        <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+
+                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+
+                            <input type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="form-check d-flex">
+                                    <input type="checkbox" class="form-check-input" id="customCheck1">
+                                    <label class="form-check-label fs-3 ms-2" for="customCheck1">Remember me</label>
+                                    <a (click)="showRecoverForm()" href="javascript:void(0)" id="to-recover" class="text-dark ms-auto fs-3"><i class="fa fa-lock me-2"></i> Forgot pwd?</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mt-4">
+                            <div class="col-xs-12">
+                                <a class="btn d-block w-100 btn-lg btn-info" href="/dashboard/classic">Log In</a>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 text-center">
+                                <div class="social">
+                                    <a href="javascript:void(0)" class="btn btn-primary me-2" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab fa-facebook-f"></i> </a>
+                                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab fa-google-plus-g"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 mt-2">
+                            <div class="col-sm-12 text-center">
+                                Don't have an account? <a href="/authentication/signup2" class="text-info ms-1"><b>Sign Up</b></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="recoverform" [ngClass]="{'d-block': recoverform}">
+            <div class="logo">
+                <span class="db"><img src="assets/images/logos/xtreme-dark-icon.svg" alt="logo" /></span>
+                <h5 class="font-medium mb-4">Recover Password</h5>
+                <span>Enter your Email and instructions will be sent to you!</span>
+            </div>
+            <div class="row mt-3">
+                <!-- Form -->
+                <form class="col-12" action="index.html">
+                    <!-- email -->
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control form-control-lg" type="email" required="" placeholder="Username">
+                        </div>
+                    </div>
+                    <!-- pwd -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button class="btn d-block w-100 btn-lg btn-danger" type="submit" name="action">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

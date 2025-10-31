@@ -1,0 +1,172 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de sliders</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form #filtroForm="ngForm">
+          <div class="d-flex justify-content-start bg-light border gap-3 py-3 px-3 sli">
+            <div class="form-group">
+              <small id="name" class="form-text">Ordenar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="sliderFiltro.ordenCriterio"
+                name="ordenCriterio">
+                <option value="fecha">Fecha de registro</option>
+                <option value="nombre">Nombre</option>
+                <option value="orden">Orden</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="sliderFiltro.ordenTipo"
+                name="ordenSlider">
+                <option value="asc">Asc</option>
+                <option selected value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estado</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="sliderFiltro.idEstado" name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                @for (estado of estados; track $index) {
+                <option [ngValue]="estado.idEstado">{{ estado.nombre }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Categoría</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="sliderFiltro.idPcategoria"
+                name="idPcategoria">
+                <option [ngValue]="0">Todos</option>
+                @for (pcategoria of pcategorias; track $index) {
+                <option [ngValue]="pcategoria.idParametro">{{ pcategoria.nombre }}
+                </option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">Buscar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="sliderFiltro.parametro" name="parametro">
+                <option selected value="nombre">Nombre</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <input type="text" class="form-control" [(ngModel)]="sliderFiltro.valor" name="valor" placeholder="">
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar
+              </button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start mt-3 gap-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/sliders/editar']">
+            <fa-icon [icon]="faList"></fa-icon>
+            Nuevo slider</button>
+          <a [routerLink]="['/dashboard/inicio']" class="btn btn-secondary">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+            Regresar</a>
+
+          <div class="form-group">
+            <select class="form-select  custom-select float-right" [(ngModel)]="sliderFiltro.registros" name="registros"
+              (ngModelChange)="actualizarPaginacion()">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th style="width: 150px;" scope="col"><a class="ng2-smart-sort-link sort">Img escritorio</a></th>
+                <th style="width: 90px;" scope="col"><a class="ng2-smart-sort-link sort">Img móvil</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Nombre</a></th>
+                <th style="width: 200px;" scope="col" class="text-center"><a
+                    class="ng2-smart-sort-link sort">Categoría</a></th>
+                <th style="width: 100px;" scope="col" class="text-right"><a class="ng2-smart-sort-link sort">Orden</a>
+                </th>
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Estado</a>
+                </th>
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Fecha</a>
+                </th>
+                <th style="width: 100px;" scope="col" class="text-right"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (slider of sliders; track $index) {
+              <tr>
+                <td><img width="140px"
+                    src="{{urlImage}}/archivos/slider/{{ ((slider.urlImagen1==null)?'imagen.png':slider.urlImagen1) }}"
+                    alt=""></td>
+                <td><img width="80px"
+                    src="{{urlImage}}/archivos/slider/{{ ((slider.urlImagen2==null)?'imagen.png':slider.urlImagen2) }}"
+                    alt=""></td>
+                <td class="text-left">{{ slider.nombre }}</td>
+                <td class="text-center">{{ slider.pcategoria.nombre }}</td>
+                <td class="text-center">{{ slider.orden }}</td>
+
+                <td class="text-center">{{ slider.estado.nombre }} </td>
+                <td class="text-center">{{ slider.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/sliders/editar/', slider.idSlider]" class="mx-2" placement="left"
+                    ngbTooltip="Editar slider">
+                    <fa-icon [icon]="faPencil"></fa-icon>
+                  </a>
+
+                  <a href="javascript:void(0);" class="m-r-5 m-l-5" placement="left" (click)="eliminar(slider)"
+                    ngbTooltip="Eliminar slider">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a>
+
+                </td>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <td colspan="8">
+                  <p class="text-center">No hay slider existentes.</p>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          <paginator class="d-flex justify-content-end" [paginator]="paginator()"
+            (childEvent)="cambiarPagina($event)" />
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

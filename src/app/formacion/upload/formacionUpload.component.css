@@ -1,0 +1,15 @@
+::ng-deep .ventanaSubirDeclaracion .modal-dialog {
+    max-width: 50%;
+    width: 50%;
+}
+.modal-title{color: #e72181 !important;display: block;font-size: 18px;font-weight: 600;}
+.input-group .btn-primary {
+    position: relative !important;
+    z-index: 2 !important;
+    display: block !important;
+    margin-top: 20px !important;
+    background: #e72181 !important;
+    border: 1px solid #e72181;
+}
+.modal-header{position: relative;}
+.modal-header .close{position: absolute;right: 0;top: 0;}

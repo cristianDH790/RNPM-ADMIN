@@ -1,0 +1,20 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="input-group">
+
+        <div class="custom-file">
+          <input type="file" (change)="seleccionarArchivo($event)" class="custom-file-input">
+          <label class="custom-file-label">{{etiqueta}}</label>
+        </div>
+        <div class="input-group-append">
+          <button (click)="subirArchivo()" class="btn btn-primary" type="button" id="inputGroupFileAddon04">Adjuntar
+            imagen</button>
+        </div>
+      </div>
+    </div>
+    <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi, ancho: 1200 px
+      y alto: 630 px.</small>
+  </div>
+</div>

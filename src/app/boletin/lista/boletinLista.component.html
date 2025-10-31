@@ -1,0 +1,163 @@
+<ng-template #customLoadingTemplate>
+</ng-template>
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de boletines</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form #filtroForm="ngForm" class="pb-3">
+          <div class="d-flex justify-content-start bg-light p-3 border gap-3 sli">
+            <div class="form-group">
+              <small class="form-text">Ordenar por</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="boletinFiltro.ordenCriterio"
+                name="ordenCriterio">
+                <option value="fecha" selected>Fecha de registro</option>
+                <option value="nombre">Nombre</option>
+
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small class="form-text">&nbsp;</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="boletinFiltro.ordenTipo" name="ordenTipo">
+                <option value="asc">Asc</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small class="form-text">Buscar por</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="boletinFiltro.parametro" name="parametro">
+                <option value="nombre">nombre</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small class="form-text">&nbsp;</small>
+              <input type="search" class="form-control" [(ngModel)]="boletinFiltro.valor" name="valor" placeholder="">
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estados</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="boletinFiltro.idEstado" name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                @for(estado of estados; track $index){
+                <option [ngValue]="estado.idEstado">{{ estado.nombre }}</option>
+                }
+              </select>
+            </div>
+
+
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar
+              </button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start gap-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/boletines/editar']">
+            <fa-icon [icon]="faList"></fa-icon>
+
+            Nuevo boletín</button>
+
+
+
+          <a class="btn btn-secondary" href="/dashboard/inicio">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+            Regresar</a>
+          <div class="form-group">
+            <select class="form-select  custom-select float-right" [(ngModel)]="boletinFiltro.registros"
+              name="registros" (ngModelChange)="actualizarPaginacion()">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="30">30</option>
+              <option [ngValue]="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th style="width: 150px;" scope="col"><a class="ng2-smart-sort-link sort">Imagen</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Nombre</a></th>
+
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Estado</a></th>
+
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Fecha</a>
+                </th>
+                <th style="width: 100px;" scope="col" class="text-right"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (boletin of boletines; track $index) {
+                <tr>
+                  <td><img width="140px"
+                      src="{{urlImage}}/archivos/boletin/{{ ((boletin.urlImagen==null)?'imagen.png':boletin.urlImagen) }}"
+                      alt=""></td>
+
+                  <td class="text-left">{{ boletin.nombre }}</td>
+
+                  <!-- <td class="text-center">
+                    {{ noticia.usuario ? noticia.usuario.nombres : '' }}
+  {{ noticia.usuario ? noticia.usuario.pApellido : '' }}
+  {{ noticia.usuario ? noticia.usuario.sApellido : '' }}
+</td> -->        <td class="text-center">{{ boletin.estado.nombre }}</td>
+
+                  <td class="text-center">{{ boletin.fecha | date:"dd/MM/yyyy" }}</td>
+                  <td class="text-end">
+                    <a [routerLink]="['/boletines/editar/', boletin.idBoletin]" class="mx-2" placement="left"
+                      ngbTooltip="Editar alianza">
+                      <fa-icon [icon]="faPencil"></fa-icon>
+                    </a>
+
+                    <a href="javascript:void(0);" class="m-r-5 m-l-5" placement="left" (click)="eliminar(boletin)"
+                      ngbTooltip="Eliminar alianza">
+                      <fa-icon [icon]="faTrash"></fa-icon>
+                    </a>
+
+                  </td>
+                </tr>
+              }
+              @if(boletines.length == 0){
+              <tr>
+                <td colspan="9">
+                  <p class="text-center">No hay boletines existentes.</p>
+                </td>
+              </tr>
+              }
+
+            </tbody>
+          </table>
+
+          <paginator class="d-flex justify-content-end" [paginator]="paginator()" (childEvent)="cambiarPagina($event)" />
+
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+</div>

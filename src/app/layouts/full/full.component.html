@@ -1,0 +1,284 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" [ngClass]="{ 'show-sidebar': showMobileMenu }" [dir]="options.dir"
+  [attr.data-theme]="options.theme" [attr.data-layout]="options.layout" [attr.data-sidebartype]="options.sidebartype"
+  [attr.data-sidebar-position]="options.sidebarpos" [attr.data-header-position]="options.headerpos"
+  [attr.data-boxed-layout]="options.boxed" data-sidebartype="full">
+  <!-- ============================================================== -->
+  <!-- Topbar header - style you can find in topbar.scss -->
+  <!-- ============================================================== -->
+  <header class="topbar" [attr.data-navbarbg]="options.navbarbg" id="menu-movil">
+    <nav class="d-flex top-navbar navbar-expand-lg p-3 gap-3"
+      [ngClass]="options.navbarbg == 'skin6' ? 'navbar-light' : 'navbar-light'">
+      <div class="navbar-header" [ngClass]="expandLogo ? 'expand-logo' : ''" [attr.data-logobg]="options.logobg">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <a class="navbar-brand" [routerLink]="['/dashboard/inicio']">
+          <!-- Logo icon -->
+          <b class="logo-icon" >
+            <img src="https://superhostingdelta.com/demos/rnpm/public/template/images/logo-rnpm.jpg" class="light-logo"  />
+          </b>
+        </a>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Toggle which is visible on mobile only -->
+        <!-- ============================================================== -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="fa fa-bars"></span>
+        </button>
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Logo -->
+      <!-- ============================================================== -->
+      <div class="navbar-collapse collapse" id="navbarSupportedContent" [attr.data-navbarbg]="options.navbarbg"
+        [ngbCollapse]="!isCollapsed">
+        <div class="w-100">
+          <ul class="navbar-nav me-auto d-flex gap-5 float-start">
+            <li class="nav-item d-none d-lg-block">
+              <button class="btn btn-primary2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <i class="fa fa-bars"></i>
+              </button>
+            </li>
+
+
+            <!-- ============================================================== -->
+            <!-- create new -->
+            <!-- ============================================================== -->
+
+            <li class="nav-item dropdown">
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" [routerLink]="['/dashboard/inicio']"
+                id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="">Inicio</span>
+              </a>
+            </li>
+
+
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Usuarios
+                  <i class="fa fa-angle-down"></i>
+                </span>
+                <span class="d-block d-md-none">
+                  Usuarios <i class="fa fa-angle-down"></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/usuarios/lista']">Gestión de usuarios</a>
+                <a class="dropdown-item" [routerLink]="['/usuarios/editar']">Nuevo usuario</a>
+
+              </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Proyectos
+                  <i class="fa fa-angle-down"></i>
+                </span>
+                <span class="d-block d-md-none">
+                  Pedidos <i class="fa fa-angle-down"></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/proyectos/lista']">Gestión de proyectos</a>
+                <a class="dropdown-item" [routerLink]="['/proyectos/editar']">Nuevo proyecto</a>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Noticias
+                  <i class="fa fa-angle-down"></i>
+                </span>
+                <span class="d-block d-md-none">
+                  Pedidos <i class="fa fa-angle-down"></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/noticias/lista']">Gestión de noticias</a>
+                <a class="dropdown-item" [routerLink]="['/noticias/editar']">Nuevo noticia</a>
+              </div>
+            </li>
+
+
+             <!-- formacion -->
+             <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Formacion
+                  <i class="fa fa-angle-down"></i>
+                </span>
+
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/formacion/lista']">Gestión de formacion</a>
+                <a class="dropdown-item" [routerLink]="['/formacion/editar']">Nueva formacion</a>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Boletines
+                  <i class="fa fa-angle-down"></i>
+                </span>
+
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/boletines/lista']">Gestión de boletines</a>
+                <a class="dropdown-item" [routerLink]="['/boletines/editar']">Nuevo boletin</a>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Alíanza
+                  <i class="fa fa-angle-down"></i>
+                </span>
+
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/alianzas/lista']">Gestión de alíanzas</a>
+                <a class="dropdown-item" [routerLink]="['/alianzas/editar']">Nueva alíanza</a>
+              </div>
+            </li>
+
+
+
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Portal
+                  <i class="fa fa-angle-down"></i>
+                </span>
+                <span class="d-block d-md-none">
+                  Portal
+                  <i class="fa fa-angle-down"></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/sliders/lista']">Gestión de sliders</a>
+                <a class="dropdown-item" [routerLink]="['/contenido-web/lista']">Gestión de contenidos web</a>
+                <a class="dropdown-item" [routerLink]="['/contenido-web-categoria/lista']">Gestión de categorías de contenido web</a>
+                <a class="dropdown-item" [routerLink]="['/suscripciones/lista']">Gestión de suscripciones</a>
+
+              </div>
+            </li>
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-md-block">Configuración
+                  <i class="fa fa-angle-down"></i>
+                </span>
+                <span class="d-block d-md-none">
+                  Configuración
+                  <i class="fa fa-angle-down"></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/configuraciones/lista']">Configuración base</a>
+                <a class="dropdown-item" [routerLink]="['/mensajes/lista']">Gestión de mensajes</a>
+              </div>
+            </li>
+
+          </ul>
+          <!-- ============================================================== -->
+          <!-- Right side toggle and nav items -->
+          <!-- ============================================================== -->
+          <ul class="navbar-nav float-end" id="cerrar">
+
+            <li class="nav-item dropdown" ngbDropdown>
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="/user4.jpg"  alt />
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <div class="bg-fondo">
+                  <img src="/user4.jpg"  alt />
+                  <h5>RNPM<h6>{{usuario.nombres}}</h6>
+                  </h5>
+                </div>
+                <a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
+                <!--<a class="dropdown-item" [routerLink]="['/estados/lista']">Gestión de estados</a>
+                <a class="dropdown-item" [routerLink]="['/parametros/lista']">Gestión de parametros</a>-->
+              </div>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </nav>
+  </header>
+  <!-- ============================================================== -->
+  <!-- Left Sidebar - style you can find in sidebar.scss  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+    <app-breadcrumb></app-breadcrumb>
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Start Page Content -->
+      <!-- ============================================================== -->
+      <router-outlet></router-outlet>
+      <!-- ============================================================== -->
+      <!-- End Start Page Content -->
+      <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="chat-windows"></div>
+</div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="bg-fondo">
+      <img src="/user4.jpg" alt />
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          RNPM <i class="fa fa-angle-down"></i>
+        </a>
+
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i> Cerrar sesión</a></li>
+        </ul>
+
+        <h4>{{usuario.nombres}}</h4>
+
+      </div>
+    </div>
+  </div>
+</div>

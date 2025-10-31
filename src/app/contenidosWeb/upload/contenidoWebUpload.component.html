@@ -1,0 +1,18 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="input-group">
+
+        <div class="custom-file">
+          <input type="file" (change)="seleccionarArchivo($event)" class="custom-file-input">
+          <label class="custom-file-label">{{etiqueta}}</label>
+        </div>
+        <div class="input-group-append">
+          <button (click)="subirArchivo()" class="btn btn-primary" type="button" id="inputGroupFileAddon04">Subir
+            archivo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

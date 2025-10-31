@@ -1,0 +1,469 @@
+<!-- ============================================================== -->
+<!-- toggle and nav items -->
+<!-- ============================================================== -->
+<ul class="navbar-nav float-start me-auto">
+  <li class="nav-item d-none d-lg-block">
+    <a
+      (click)="toggleSidebar.emit()"
+      class="nav-link sidebartoggler waves-effect waves-light"
+      href="javascript:void(0)"
+    >
+      <i class="mdi mdi-menu fs-7"></i>
+    </a>
+  </li>
+  <!-- ============================================================== -->
+  <!-- mega menu -->
+  <!-- ============================================================== -->
+  <li class="nav-item mega-dropdown" ngbDropdown [autoClose]="false">
+    <a
+      ngbDropdownToggle
+      class="nav-link waves-effect waves-dark"
+      href="javascript:void(0)"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span class="d-none d-md-block"
+        >Mega
+        <i-feather name="chevron-down"></i-feather>
+      </span>
+      <span class="d-block d-md-none">
+        <i class="mdi mdi-dialpad fs-7"></i>
+      </span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-animate-up" ngbDropdownMenu>
+      <div class="mega-dropdown-menu row">
+        <div class="col-lg-3 col-xlg-2 m-b-30">
+          <h4 class="mb-4">CAROUSEL</h4>
+          <!-- CAROUSEL -->
+          <ngb-carousel class="carousel-dark">
+            <ng-template ngbSlide>
+              <img
+                src="assets/images/big/img1.jpg"
+                class="img-fluid"
+                alt="Random first slide"
+              />
+            </ng-template>
+            <ng-template ngbSlide>
+              <img
+                src="assets/images/big/img2.jpg"
+                class="img-fluid"
+                alt="Random second slide"
+              />
+            </ng-template>
+            <ng-template ngbSlide>
+              <img
+                src="assets/images/big/img3.jpg"
+                class="img-fluid"
+                alt="Random third slide"
+              />
+            </ng-template>
+          </ngb-carousel>
+          <!-- End CAROUSEL -->
+        </div>
+        <div class="col-lg-3 m-b-30">
+          <h4 class="mb-4">ACCORDION</h4>
+          <!-- Accordian -->
+          <ngb-accordion
+            [closeOthers]="true"
+            activeIds="static-1"
+            class="accordion nav-accordion"
+          >
+            <ngb-panel id="static-1" title="Simple">
+              <ng-template ngbPanelContent>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                accusamus terry richardson ad squid.
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel id="static-2">
+              <ng-template ngbPanelTitle>
+                <span>&#9733; <b>Fancy</b> title &#9733;</span>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                accusamus terry richardson ad squid.
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel id="static-3" title="Disabled" [disabled]="true">
+              <ng-template ngbPanelContent>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                accusamus terry richardson ad squid.
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+        <div class="col-lg-3 m-b-30">
+          <h4 class="mb-4">CONTACT US</h4>
+          <!-- Contact -->
+          <form>
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputname1"
+                placeholder="Enter Name"
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Enter email"
+              />
+            </div>
+            <div class="mb-3">
+              <textarea
+                class="form-control"
+                id="exampleTextarea"
+                rows="3"
+                placeholder="Message"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-info">Submit</button>
+          </form>
+        </div>
+        <div class="col-lg-3 col-xlg-4 m-b-30">
+          <h4 class="mb-4">List style</h4>
+          <!-- List style -->
+          <ul class="list-style-none">
+            <li>
+              <a href="javascript:void(0)">
+                <i class="fa fa-check text-success"></i> You can give link</a
+              >
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="fa fa-check text-success"></i> Give link</a
+              >
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="fa fa-check text-success"></i> Another Give link</a
+              >
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="fa fa-check text-success"></i> Forth link</a
+              >
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="fa fa-check text-success"></i> Another fifth link</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </li>
+  <!-- ============================================================== -->
+  <!-- End mega menu -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- create new -->
+  <!-- ============================================================== -->
+  <li class="nav-item dropdown" ngbDropdown>
+    <a
+      ngbDropdownToggle
+      class="nav-link dropdown-toggle"
+      href="javascript:void(0)"
+      id="navbarDropdown"
+      role="button"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span class="d-none d-md-block"
+        >Create New
+        <i-feather name="chevron-down"></i-feather>
+      </span>
+      <span class="d-block d-md-none">
+        <i class="fa fa-plus"></i>
+      </span>
+    </a>
+    <div
+      class="dropdown-menu dropdown-menu-animate-up"
+      aria-labelledby="navbarDropdown"
+      ngbDropdownMenu
+    >
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </li>
+  <!-- ============================================================== -->
+  <!-- Search -->
+  <!-- ============================================================== -->
+  <li class="nav-item search-box">
+    <a
+      (click)="showSearch = !showSearch"
+      class="nav-link waves-effect waves-dark"
+      href="javascript:void(0)"
+    >
+      <i-feather name="search"></i-feather>
+    </a>
+    <form
+      class="app-search position-absolute"
+      [ngClass]="{ 'show-search': showSearch }"
+    >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search &amp; enter"
+      />
+      <a class="srh-btn" (click)="showSearch = !showSearch">
+        <i class="ti-close"></i>
+      </a>
+    </form>
+  </li>
+</ul>
+<!-- ============================================================== -->
+<!-- Right side toggle and nav items -->
+<!-- ============================================================== -->
+<ul class="navbar-nav float-end">
+  <!-- ============================================================== -->
+  <!-- create new -->
+  <!-- ============================================================== -->
+  <li class="nav-item dropdown" ngbDropdown>
+    <a
+      ngbDropdownToggle
+      class="nav-link dropdown-toggle"
+      href="javascript:void(0)"
+      id="navbarDropdown"
+      role="button"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <i class="flag-icon flag-icon-{{ selectedLanguage.icon }}"></i>
+    </a>
+    <div
+      class="dropdown-menu dropdown-menu-animate-up"
+      aria-labelledby="navbarDropdown"
+      ngbDropdownMenu
+    >
+      <span
+        class="dropdown-item"
+        href="#"
+        *ngFor="let lang of languages"
+        (click)="changeLanguage(lang)"
+      >
+        <i class="flag-icon flag-icon-{{ lang.icon }}"></i>
+        <span
+          >{{ lang.language }}
+          <span *ngIf="lang.type">({{ lang.type }})</span>
+        </span>
+      </span>
+    </div>
+  </li>
+  <!-- ============================================================== -->
+  <!-- Comment -->
+  <!-- ============================================================== -->
+  <li class="nav-item dropdown" ngbDropdown>
+    <a
+      ngbDropdownToggle
+      class="nav-link dropdown-toggle waves-effect waves-dark"
+      href="javascript:void(0)"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <i-feather name="bell"></i-feather>
+    </a>
+    <div
+      class="dropdown-menu mailbox dropdown-menu-end dropdown-menu-animate-up"
+      ngbDropdownMenu
+    >
+      <span class="with-arrow">
+        <span class="bg-primary"></span>
+      </span>
+      <ul class="list-style-none">
+        <li>
+          <div class="drop-title bg-primary text-white">
+            <h4 class="mb-0 mt-1">4 New</h4>
+            <span class="font-light">Notifications</span>
+          </div>
+        </li>
+        <li>
+          <div class="message-center notifications" [perfectScrollbar]="config">
+            <!-- Message -->
+            <a
+              href="javascript:void(0)"
+              class="message-item border-bottom d-block text-decoration-none"
+              *ngFor="let notification of notifications"
+            >
+              <span
+                class="btn btn-circle rounded-circle {{ notification.btn }}"
+              >
+                <i class="{{ notification.icon }}"></i>
+              </span>
+              <span class="mail-contnet d-inline-block w-75 ps-3 align-middle">
+                <h5 class="message-title">{{ notification.title }}</h5>
+                <span class="mail-desc fs-2 d-block text-muted text-truncate">{{
+                  notification.subject
+                }}</span>
+                <span class="time fs-2 d-block text-muted text-truncate">{{
+                  notification.time
+                }}</span>
+              </span>
+            </a>
+          </div>
+        </li>
+        <li class="border-top p-3 d-grid">
+          <button class="btn btn-info">Check all notifications</button>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <!-- ============================================================== -->
+  <!-- End Comment -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Messages -->
+  <!-- ============================================================== -->
+  <li class="nav-item dropdown" ngbDropdown>
+    <a
+      ngbDropdownToggle
+      class="nav-link dropdown-toggle waves-effect waves-dark"
+      href="javascript:void(0)"
+      id="2"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <i-feather name="message-square"></i-feather>
+    </a>
+    <div
+      class="dropdown-menu dropdown-menu-end mailbox dropdown-menu-animate-up"
+      aria-labelledby="2"
+      ngbDropdownMenu
+    >
+      <span class="with-arrow">
+        <span class="bg-danger"></span>
+      </span>
+      <ul class="list-style-none">
+        <li>
+          <div class="drop-title text-white bg-danger">
+            <h4 class="mb-0 mt-1">5 New</h4>
+            <span class="font-light">Messages</span>
+          </div>
+        </li>
+        <li>
+          <div class="message-center message-body" [perfectScrollbar]="config">
+            <!-- Message -->
+            <a
+              href="javascript:void(0)"
+              class="message-item border-bottom d-block text-decoration-none"
+              *ngFor="let mymessage of mymessages"
+            >
+              <span class="user-img position-relative d-inline-block">
+                <img
+                  src="{{ mymessage.useravatar }}"
+                  alt="user"
+                  class="rounded-circle"
+                />
+                <span
+                  class="profile-status rounded-circle d-inline-block {{
+                    mymessage.status
+                  }} float-end"
+                ></span>
+              </span>
+              <span class="mail-contnet d-inline-block w-75 ps-3 align-middle">
+                <h5 class="message-title">{{ mymessage.from }}</h5>
+                <span class="mail-desc fs-2 d-block text-muted text-truncate">{{
+                  mymessage.subject
+                }}</span>
+                <span class="time fs-2 d-block text-muted text-truncate">{{
+                  mymessage.time
+                }}</span>
+              </span>
+            </a>
+          </div>
+        </li>
+        <li>
+          <a
+            class="text-center link d-flex align-items-center justify-content-center"
+            href="javascript:void(0);"
+          >
+            <b>See all e-Mails</b>
+            <i class="fa fa-angle-right ms-1"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <!-- ============================================================== -->
+  <!-- End Messages -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- User profile and search -->
+  <!-- ============================================================== -->
+  <li class="nav-item" ngbDropdown>
+    <a
+      ngbDropdownToggle
+      class="nav-link text-muted waves-effect waves-dark pro-pic"
+      href="javascript:void(0)"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <img
+        src="assets/images/users/user4.jpg"
+        alt="user"
+        class="rounded-circle"
+        width="31"
+      />
+    </a>
+    <div
+      class="dropdown-menu-end user-dd dropdown-menu-animate-up"
+      ngbDropdownMenu
+    >
+      <span class="with-arrow">
+        <span class="bg-primary"></span>
+      </span>
+      <div
+        class="d-flex no-block align-items-center p-3 bg-primary text-white mb-2"
+      >
+        <div class="">
+          <img
+            src="assets/images/users/user4.jpg"
+            alt="user"
+            class="img-circle"
+            width="60"
+          />
+        </div>
+        <div class="ms-2">
+          <h4 class="mb-0">Steave Jobs</h4>
+          <p class="mb-0">jobs@gmail.com</p>
+        </div>
+      </div>
+      <a class="dropdown-item" href="javascript:void(0)">
+        <i class="ti-user me-1 ms-1"></i> My Profile</a
+      >
+      <a class="dropdown-item" href="javascript:void(0)">
+        <i class="ti-wallet me-1 ms-1"></i> My Balance</a
+      >
+      <a class="dropdown-item" href="javascript:void(0)">
+        <i class="ti-email me-1 ms-1"></i> Inbox</a
+      >
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="javascript:void(0)">
+        <i class="ti-settings me-1 ms-1"></i> Account Setting</a
+      >
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="javascript:void(0)">
+        <i class="fa fa-power-off me-1 ms-1"></i> Logout</a
+      >
+      <div class="dropdown-divider"></div>
+      <div class="ps-4 p-2">
+        <a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded"
+          >View Profile</a
+        >
+      </div>
+    </div>
+  </li>
+  <!-- ============================================================== -->
+  <!-- User profile and search -->
+  <!-- ============================================================== -->
+</ul>

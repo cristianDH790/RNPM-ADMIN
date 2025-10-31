@@ -1,0 +1,14 @@
+::ng-deep .swal2-cancel {
+  background-color: #989898 !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin-right: 10px !important;
+}
+
+::ng-deep .swal2-confirm {
+  background-color: #d63384 !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
+}

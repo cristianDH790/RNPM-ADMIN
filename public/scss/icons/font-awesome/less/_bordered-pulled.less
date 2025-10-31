@@ -1,0 +1,16 @@
+// Bordered & Pulled
+// -------------------------
+
+.@{fa-css-prefix}-border {
+  border-radius: .1em;
+  border: solid .08em @fa-border-color;
+  padding: .2em .25em .15em;
+}
+
+.@{fa-css-prefix}-float-start { float: left; }
+.@{fa-css-prefix}-float-end { float: right; }
+
+.@{fa-css-prefix}, .fas, .far, .fal, .fab {
+  &.@{fa-css-prefix}-float-start { margin-right: .3em; }
+  &.@{fa-css-prefix}-float-end { margin-left: .3em; }
+}

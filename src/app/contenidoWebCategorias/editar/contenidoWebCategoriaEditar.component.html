@@ -1,0 +1,135 @@
+<ng-template #customLoadingTemplate></ng-template>
+
+<ngx-loading [show]="loading"
+  [config]="{ 'primaryColour': '#00217d ', 'secondaryColour': '#00217d ','tertiaryColour': '#00217d '}"
+  [template]="customLoadingTemplate"></ngx-loading>
+
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #contenidoWebCategoriaForm="ngForm">
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('nombre',1)">
+                <label class="control-label">Nombre * <small>{{validarError('nombre',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="contenidoWebCategoria.nombre" name="nombre"
+                  placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('estado',1)">
+                <label class="control-label">Estado <small>{{validarError('estado',2)}}</small></label>
+                <select class="form-control form-select custom-select mr-sm-2"
+                  [(ngModel)]="contenidoWebCategoria.estado" [compareWith]="compararEstado" name="estado" id="estado"
+                  tabindex="1">
+                  @for (estado of estados; track $index) {
+                  <option [ngValue]="estado">
+                    {{ estado.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!--/row-->
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('rcontenidoWebCategoria',1)">
+                <label class="control-label">Padre <small>{{validarError('rcontenidoWebCategoria',2)}}</small></label>
+                <select class="form-control form-select custom-select mr-sm-2"
+                  [(ngModel)]="contenidoWebCategoria.rcontenidoWebCategoria"
+                  [compareWith]="compararContenidoWebCategoria" name="rcontenidoWebCategoria"
+                  id="rcontenidoWebCategoria" tabindex="1">
+                  <option [ngValue]="{idContenidoWebCategoria:null}">Ninguno</option>
+                  @for (rcontenidoWebCategoria of rcontenidoWebCategorias; track $index) {
+                  <option [ngValue]="rcontenidoWebCategoria">
+                    {{rcontenidoWebCategoria.nombre}}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('orden',1)">
+                <label class="control-label">Orden * <small>{{validarError('orden',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="contenidoWebCategoria.orden" name="orden"
+                  placeholder="">
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('miniatura',1)">
+                <label class="control-label">Miniatura <small>{{validarError('miniatura',2)}}</small></label>
+                <mat-slide-toggle style="display: block;" (change)="setValueMiniatura( $event )"
+                  [checked]="contenidoWebCategoria  && contenidoWebCategoria.miniatura === true ? true : false"
+                  color="primary"></mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('banner',1)">
+                <label class="control-label">Banner <small>{{validarError('banner',2)}}</small></label>
+                <mat-slide-toggle style="display: block;" (change)="setValueBanner( $event )"
+                  [checked]="contenidoWebCategoria  && contenidoWebCategoria.banner === true ? true : false"
+                  color="primary"></mat-slide-toggle>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="row pt-3">
+            @if (contenidoWebCategoria.idContenidoWebCategoria>0) {
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Fecha registro</label>
+                <input type="text" class="form-control" name="fecha"
+                  value="{{contenidoWebCategoria.fecha | date: 'dd/MM/yyyy'}}" disabled>
+              </div>
+            </div>
+            }
+          </div>
+
+          <div class="form-actions d-flex gap-3 pt-3">
+            <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+              <fa-icon [icon]="faCheck"></fa-icon>Guardar</button>
+
+            <a [routerLink]="['/contenido-web-categoria/lista']" class="btn btn-secondary">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+              Regresar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->
+
+
+<!--- ------------------
+Modal subir Imagen
+---------------------->
+<!-- <ng-template #modalSubirImagen let-modal>
+  <ng-template #customLoadingTemplate>
+
+  </ng-template>
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"
+    [template]="customLoadingTemplate"></ngx-loading>
+  <div class="modal-header">
+    <h4 class="modal-title">Adjuntar imagen </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <contenidoWebCategoria-upload [contenidoWebCategoria]="contenidoWebCategoria"></contenidoWebCategoria-upload>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template> -->

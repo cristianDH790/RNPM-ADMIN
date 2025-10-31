@@ -1,0 +1,90 @@
+// 
+// Chat app
+// 
+.chat-box{
+    overflow: auto;
+}
+
+.chat-list {
+    .chat-item {
+        .chat-img {
+            width: 45px;
+            img {
+                width: 45px;
+            }
+        }
+        .chat-content {
+            width: calc(100% - 50px); 
+            .box {
+                color:$gray-800;
+                background: $gray-100;
+            }
+        }
+        .chat-time {
+            color: $gray-700;
+            margin:5px 0 15px 65px;
+        }
+        &.odd {
+            position: relative;
+            .chat-img {
+                position: absolute;
+                right: 0;
+            }
+            .chat-content {
+                text-align: right;
+                width: calc(100% - 0px);
+            }
+            .chat-time{
+                text-align:right;
+            }
+            .box {
+                clear: both;
+                color:$white;
+                background: $info;
+                display: inline-block;
+            }
+            &.type-msg {
+                .chat-messages {
+                    .chat-content {
+                        margin-top: 3px;
+                        &:first-child {
+                            margin-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+        &.odd + .odd {
+            margin-top: 0px;
+        }
+        &.reverse {
+            text-align: right;
+            .chat-time {
+                text-align: left;
+            }
+            .chat-content {
+                padding-left: 0px;
+                padding-right: 15px;
+            }
+        }
+    }
+    &.with-img {
+        .chat-item.odd .chat-content,
+        .chat-list .chat-item.odd .chat-time {
+            padding-right: 60px;
+        }
+    }
+}
+
+
+/*******************/
+/*Chat widget*/
+/*******************/
+.mailbox .chat-scroll{
+    height:calc(100vh - 100px);
+}
+
+
+
+
+

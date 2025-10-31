@@ -1,0 +1,28 @@
+/*******************/
+/*Steam line widget*/
+/*******************/
+.steamline {
+    .sl-left { 
+        margin-left: -20px;
+        z-index: 1;
+        width: 40px;
+        line-height: 40px; 
+        height: 40px; 
+        img {
+            max-width: 40px;
+        }
+    }
+}
+
+.steamline .sl-right {
+    .desc,
+    .inline-photos {
+        margin-bottom: 21px;
+    }    
+}
+
+.sl-date {
+    font-size: 10px;
+    color: $gray-500;
+}
+

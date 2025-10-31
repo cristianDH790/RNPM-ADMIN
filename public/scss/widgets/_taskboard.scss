@@ -1,0 +1,82 @@
+//
+// Taskboard
+//
+
+.taskboard {
+  .taskboard-wrapper {
+    width: 280px;
+
+    &:first-child {
+      padding-left: 0 !important;
+    }
+
+    &:last-child {
+      padding-right: 0 !important;
+    }
+  }
+
+  .taskboard-list {
+    max-height: 100%;
+    white-space: normal;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .taskboard-header {
+    letter-spacing: 0.02rem;
+  }
+
+  .taskboard-task {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: $white;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      cursor: grab;
+    }
+  }
+
+  .taskboard-task:after {
+    content: "";
+    position: absolute;
+    border: 4px solid transparent;
+    top: 0;
+    border-top-width: 12px;
+    border-bottom-color: transparent;
+    right: 6px;
+  }
+
+  .taskboard-task.task-status-success:after {
+    border-top-color: $success;
+    border-right-color: $success;
+    border-left-color: $success;
+  }
+
+  .taskboard-task.task-status-info:after {
+    border-top-color: $info;
+    border-right-color: $info;
+    border-left-color: $info;
+  }
+
+  .taskboard-task.task-status-warning:after {
+    border-top-color: $warning;
+    border-right-color: $warning;
+    border-left-color: $warning;
+  }
+
+  .taskboard-task.task-status-danger:after {
+    border-top-color: $danger;
+    border-right-color: $danger;
+    border-left-color: $danger;
+  }
+
+  .taskboard-cards {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

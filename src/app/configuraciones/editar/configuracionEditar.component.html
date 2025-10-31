@@ -1,0 +1,151 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #configuracionForm="ngForm">
+          <!--/row-->
+          <div class="row p-t-5">
+            <div class="col-md-6 mb-3">
+              <div class="form-group has-danger" [class]="validarError('nombre',1)">
+                <label class="control-label">Nombre * <small>{{validarError('nombre',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="configuracion.nombre" name="nombre" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group" [class]="validarError('ptipo',1)">
+                <label class="control-label">Tipo <small>{{validarError('ptipo',2)}}</small></label>
+                <select class="form-select custom-select mr-sm-2" [(ngModel)]="configuracion.ptipo"
+                  [compareWith]="compararParametro" name="ptipo" id="ptipo" tabindex="1">
+                  @for (ptipo of ptipos; track $index) {
+                  <option [ngValue]="ptipo">
+                    {{ ptipo.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="row p-t-5">
+
+            <div class="col-md-6 mb-3">
+              <div class="form-group has-danger" [class]="validarError('valor',1)">
+                <label class="control-label">Valor * <small>{{validarError('valor',2)}}</small></label>
+                <textarea class="form-control" [(ngModel)]="configuracion.valor" name="valor" id="valor" cols="2"
+                  rows="2"></textarea>
+
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group has-danger">
+                <label class="control-label">Descripción</label>
+                <textarea class="form-control" [(ngModel)]="configuracion.descripcion" name="descripcion"
+                  id="descripcion" cols="2" rows="2"></textarea>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row p-t-5">
+            <div class=" col-md-6 mb-3">
+              <div class="form-group">
+                <label class="control-label">Imagen</label>
+                <div>
+                  <input type="text" class="form-control" [(ngModel)]="configuracion.urlImagen" name="urlImagen"
+                    style="display:inline;max-width: 75%; margin-right: 5px;" readonly>
+                  <button (click)="abrirModalSubirImg(modalSubirImagen)" class="btn btn-secondary"
+                    style="display:inline;margin-right: 5px;">
+                    Adjuntar</button>
+                  <br>
+                  <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi,
+                    ancho: 1200 px
+                    y alto: 630 px.</small>
+                </div>
+
+              </div>
+
+            </div>
+            <div class=" col-md-6 mb-3">
+              <div class="form-group">
+                <label class="control-label">Visualización de imagen *</label>
+                <div class="box-img">
+                  <img
+                    [src]="((imageSrc!=null)?imageSrc:((urlImagen != null)? urlImagen : urlImage+'/archivos/configuracion/imagen.png'))"
+                    class="col-md-5">
+
+                </div>
+              </div>
+              @if (configuracion.urlImagen!=null) {
+              <div class="form-group">
+
+                <div>
+                  <a href="javascript:void(0);" (click)="eliminarImagen(configuracion)">Eliminar imagen</a>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="row p-t-5">
+            @if (configuracion.idConfiguracion>0) {
+
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label class="control-label">Fecha registro</label>
+                <input type="text" class="form-control" name="fecha"
+                  value="{{configuracion.fecha | date: 'dd/MM/yyyy'}}" disabled>
+              </div>
+            </div>
+            }
+
+          </div>
+          <!--/row-->
+
+
+          <div class="form-actions py-3 d-flex gap-3">
+            <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+              <fa-icon [icon]="faCheck"></fa-icon>
+              Guardar</button>
+
+            <a [routerLink]="['/configuraciones/lista']" class="btn btn-secondary">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+
+              Regresar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->
+
+<!--- ------------------
+Modal subir Imagen
+---------------------->
+<ng-template #modalSubirImagen let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Adjuntar imagen </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <configuracion-upload [configuracion]="configuracion"></configuracion-upload>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>

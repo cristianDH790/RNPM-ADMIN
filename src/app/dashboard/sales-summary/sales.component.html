@@ -1,0 +1,146 @@
+<ng-template #customLoadingTemplate></ng-template>
+
+<ngx-loading [show]="loading"
+  [config]="{ 'primaryColour': '#e72181 ', 'secondaryColour': '#e72181 ','tertiaryColour': '#e72181 '}"
+  [template]="customLoadingTemplate"></ngx-loading>
+<div class="card">
+  <div class="card-body border-top">
+    <div class="d-md-flex align-items-center">
+      <div>
+        <!--<h4 class="card-title">Incidencias</h4>-->
+        <h5 class="card-subtitle"></h5>
+      </div>
+
+    </div>
+    <div class="row mb-0">
+      <!-- col -->
+      <div class="col-lg-2 col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-orange display-5" style="color: #e72181 !important;">
+              <fa-icon [icon]="faUsers"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Total usuarios</span>
+            <h3 class="font-medium mb-0">{{totalUsuarios}}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- col -->
+      <div class="col-lg-2 col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-orange display-5" style="color: #e72181 !important;">
+              <fa-icon [icon]="faUsers"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Total proyectos</span>
+            <h3 class="font-medium mb-0">{{totalProyectos}}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- col -->
+      <div class="col-lg-2 col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-orange display-5" style="color: #e72181 !important;">
+              <fa-icon [icon]="faUsers"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Total noticias</span>
+            <h3 class="font-medium mb-0">{{totalNoticias}}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- col -->
+      <div class="col-lg-2 col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-orange display-5" style="color: #e72181 !important;">
+              <fa-icon [icon]="faUsers"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Total campañas</span>
+            <h3 class="font-medium mb-0">{{totalCampanas}}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- col -->
+      <div class="col-lg-2 col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-orange display-5" style="color: #e72181 !important;">
+              <fa-icon [icon]="faUsers"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Total Suscripciones</span>
+            <h3 class="font-medium mb-0">{{totalSuscripciones}}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- col -->
+      <div class="col-lg-2 col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-orange display-5" style="color: #e72181 !important;">
+              <fa-icon [icon]="faUsers"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Total formaciones</span>
+            <h3 class="font-medium mb-0">{{totalFormaciones}}</h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br>
+  </div>
+
+
+
+
+
+  <!-- ============================================================== -->
+  <!-- Info Box -->
+  <!-- ============================================================== -->
+
+</div>
+<br>
+<div class="card">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="card card-hover w-100 ">
+        <div class="card-body" style="min-height: 400px;">
+          <div class="d-md-flex align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+              <h4 class="card-title">Registros por mes</h4>
+            </div>
+
+          </div>
+          <!-- column -->
+          <div class="row mt-4 py-2">
+            <!-- column -->
+            <div class="col-lg-12">
+              <div class="mt-4 d-flex flex-column">
+                <apx-chart [series]="salesChartOptions.series!" [chart]="salesChartOptions.chart!"
+                  [xaxis]="salesChartOptions.xaxis!" [yaxis]="salesChartOptions.yaxis!" [grid]="salesChartOptions.grid!"
+                  [stroke]="salesChartOptions.stroke" [tooltip]="salesChartOptions.tooltip!"
+                  [dataLabels]="salesChartOptions.dataLabels!" [legend]="salesChartOptions.legend!"
+                  [colors]="salesChartOptions.colors!" [markers]="salesChartOptions.markers">
+                </apx-chart>
+              </div>
+            </div>
+            <!-- column -->
+
+          </div>
+          <!-- column -->
+        </div>
+      </div>
+    </div>
+  </div>

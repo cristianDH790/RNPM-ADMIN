@@ -1,0 +1,408 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">{{ titulo }}</h4>
+          <hr class="m-t-0 m-b-15">
+          <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>Producto</a>
+              <ng-template ngbNavContent>
+                <form class="m-t-0" #proyectoForm="ngForm">
+
+                  <div class="row pt-3">
+                    <div class="col-md-6">
+                      <div class="form-group has-danger" [class]="validarError('nombre',1)">
+                        <label class="control-label">Nombre * <small>{{validarError('nombre',2)}}</small></label>
+                        <input type="text" (keyup)="keyup($event.target )" class="form-control"
+                          [(ngModel)]="proyecto.nombre" name="nombre" placeholder="">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group has-danger" [class]="validarError('urlAmigable',1)">
+                        <label class="control-label">Url amigable *
+                          <small>{{validarError('urlAmigable',2)}}</small></label>
+                        <input type="text" class="form-control" [(ngModel)]="proyecto.urlAmigable" name="urlAmigable"
+                          disabled>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row pt-3">
+                    <!-- <div class="col-md-6">
+                      <div class="form-group" [class]="validarError('cliente',1)">
+                        <label class="control-label">Cliente *<small>{{validarError('cliente',2)}}</small></label>
+                        <select class="form-select mr-sm-2" [(ngModel)]="proyecto.cliente"
+                          [compareWith]="compararCliente" name="cliente" id="cliente" tabindex="1">
+                          <option [ngValue]="{idCliente:0}">Seleccione</option>
+                          @for (cliente of clientes; track $index) {
+                          <option [ngValue]="cliente">
+                            {{ cliente.nombre }}
+                          </option>
+                          }
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-6">
+                      <div class="form-group" [class]="validarError('destacado',1)">
+                        <label class="control-label">Destacado* <small>{{validarError('destacado',2)}}</small></label>
+                        <select class="form-select mr-sm-2" [(ngModel)]="proyecto.destacado" name="destacado"
+                          id="destacado" tabindex="1">
+                          <option [ngValue]="0">NO</option>
+                          <option [ngValue]="1">SI</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group" [class]="validarError('pcategoria',1)">
+                        <label class="control-label">Categoría * <small>{{validarError('pcategoria',2)}}</small></label>
+                        <select class="form-select mr-sm-2" [(ngModel)]="proyecto.idpcategoria"
+                          [compareWith]="compararParametro" name="pcategoria" id="pcategoria" tabindex="1">
+                          @for (idpcategoria of idpcategorias; track $index) {
+                          <option [ngValue]="idpcategoria">
+                            {{ idpcategoria.nombre }}
+                          </option>
+                          }
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-3">
+
+                    <div class="col-md-12">
+                      <div class="form-group has-danger" [class]="validarError('descripcion',1)">
+                        <label class="control-label">Descripción
+                          <small>{{validarError('descripcion',2)}}</small></label>
+                        <angular-editor placeholder="" [(ngModel)]="proyecto.descripcion" name="descripcion"
+                          [config]="editorConfig">
+                          <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+
+                          </ng-template>
+                        </angular-editor>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row pt-3">
+                    <div class="col-md-12">
+                      <label class="control-label">Contenido <small>{{validarError('contenido',2)}}</small></label>
+
+                      <angular-editor placeholder="" [(ngModel)]="proyecto.contenido" name="contenido"
+                        [config]="editorConfig">
+                        <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+                          <ae-toolbar-set>
+                            <ae-button #botonFileManager iconClass="fa fa-folder" title="Administrador de archivos"
+                              (buttonClick)="fileManager(content,'contenido')"></ae-button>
+                            <ae-button *ngIf="imgSelected!=''" #botonAgregar iconClass="fa fa-image"
+                              title="Agregar imagen"
+                              (buttonClick)="executeCommandFn('insertHtml', imgSelected)"></ae-button>
+
+                          </ae-toolbar-set>
+                        </ng-template>
+                      </angular-editor>
+                    </div>
+                  </div>
+
+                  <!-- <div class="row pt-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="control-label">Imagen</label>
+                        <div>
+                          <input type="text" class="form-control" [(ngModel)]="proyecto.urlImagen" name="urlImagen"
+                            style="display:inline;max-width: 75%; margin-right: 5px;" readonly>
+                          <button (click)="abrirModalSubirImg(modalSubirImagen)" class="btn btn-secondary"
+                            style="display:inline;margin-right: 5px;">
+                            Adjuntar</button>
+                          <br>
+                          <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi,
+                            ancho: 800 px
+                            y alto: 600 px.</small>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label">Visualización de imagen</label>
+                          <div class="box-img">
+                            <img
+                              [src]="((imageSrc!=null)?imageSrc:((urlImagen1 != null)? urlImagen1 : urlImage+'/archivos/proyecto/imagen.png'))"
+                              class="col-md-5">
+                          </div>
+                          <div class="form-group" *ngIf="proyecto.urlImagen!=null && proyecto.idProyecto>0">
+
+                            <div>
+                              <a href="javascript:void(0);" (click)="eliminarImagen(proyecto)">Eliminar imagen</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="row pt-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="control-label">Imagen </label>
+                        <div>
+                          <input type="text" class="form-control" [(ngModel)]="proyecto.urlImagen" name="urlImagen"
+                            style="display:inline;max-width: 75%; margin-right: 5px;" readonly>
+                          <button (click)="abrirModalSubirImg(modalSubirImagen)" class="btn btn-secondary"
+                            style="display:inline;margin-right: 5px;">
+                            Adjuntar</button>
+                          <br>
+                          <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi, ancho: 800 px
+                            y alto: 600 px.</small>
+                        </div>
+
+                        @if (proyecto.urlImagen && proyecto.idProyecto>0) {
+
+                        <div class="form-group">
+                          <div>
+                            <a class="btn-eliminar" href="javascript:void(0);"
+                              (click)="eliminarImagen(proyecto)">Eliminar imagen
+                            </a>
+                          </div>
+                        </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="control-label">Visualización de imagen</label>
+                        <div class="box-img">
+                          <img
+                            [src]="((imageSrc!=null)?imageSrc:((urlImagen1 != null)? urlImagen1 : urlImage+'/archivos/proyecto/imagen.png'))"
+                            class="col-md-5">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row pt-3">
+                    <div class="col-md-12">
+                      <label class="control-label d-block">Palabras clave SEO</label>
+                      <textarea class="form-control w-100" [(ngModel)]="proyecto.palabrasClaveSeo"
+                        name="palabrasClaveSeo"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row pt-3">
+                    <div class="col-md-12">
+                      <label class="control-label d-block">Título SEO</label>
+                      <textarea class="form-control w-100" [(ngModel)]="proyecto.tituloSeo" name="tituloSeo"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row pt-3">
+                    <div class="col-md-12">
+                      <label class="control-label d-block">Descripción SEO</label>
+                      <textarea class="form-control w-100" [(ngModel)]="proyecto.descripcionSeo"
+                        name="descripcionSeo"></textarea>
+                    </div>
+                  </div>
+
+
+                  <div class="row pt-3">
+                    <div class="col-md-6">
+                      <div class="form-group" [class]="validarError('estado',1)">
+                        <label class="control-label">Estado <small>{{validarError('estado',2)}}</small></label>
+                        <select class="form-select mr-sm-2" [(ngModel)]="proyecto.estado" [compareWith]="compararEstado"
+                          name="estado" id="estado" tabindex="1">
+                          @for (estado of estados; track $index) {
+                          <option [ngValue]="estado">
+                            {{ estado.nombre }}
+                          </option>
+                          }
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group has-danger" [class]="validarError('orden',1)">
+                        <label class="control-label">Orden * <small>{{validarError('orden',2)}}</small></label>
+                        <input type="text" class="form-control" [(ngModel)]="proyecto.orden" name="orden">
+                      </div>
+                    </div>
+
+                    <div class="row pt-3">
+                      <!-- <div class="col-md-6">
+                        <div class="form-group" [class]="validarError('fechaProyecto',1)">
+                          <label class="control-label">Fecha de proyecto *
+                            <small>{{validarError('fechaProyecto',2)}}</small> </label>
+                          <input type="date" class="form-control" [(ngModel)]="proyecto.fechaProyecto"
+                            name="fechaProyecto">
+                        </div>
+                      </div> -->
+                      @if (proyecto.idProyecto>0) {
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="control-label">Fecha registro</label>
+                          <input type="text" class="form-control" name="fecha"
+                            value="{{proyecto.fecha | date: 'dd/MM/yyyy'}}" disabled>
+                        </div>
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  <!--/row-->
+
+
+                  <div class="form-actions py-3 d-flex gap-3">
+                    <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+                      <fa-icon [icon]="faCheck"></fa-icon>
+                      Guardar</button>
+
+                    <a [routerLink]="['/proyectos/lista']" class="btn btn-secondary">
+                      <fa-icon [icon]="faArrowLeft"></fa-icon>
+                      Regresar</a>
+                  </div>
+                </form>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" *ngIf="proyecto.idProyecto>0">
+              <a ngbNavLink>Imágenes</a>
+              <ng-template ngbNavContent>
+                <div class="d-flex justify-content-start">
+                  <div class="form-group">
+                    <button (click)="abrirModalSubirImagenes(modalSubirImagenes, 0)" class="btn btn-secondary"
+                      [disabled]="proyecto.idProyecto === undefined"
+                      style="display: inline; margin-right: 5px; margin-top: 10px">
+                      Subir imagen
+                    </button>
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr class="thead-light">
+                        <th scope="col" style="width: 100px">
+                          <a href="" class="ng2-smart-sort-link sort">Imagen</a>
+                        </th>
+                        <th scope="col" style="width: 100px">
+                          <a href="" class="ng2-smart-sort-link sort">Miniatura</a>
+                        </th>
+                        <th scope="col">
+                          <a href="" class="ng2-smart-sort-link sort">Título</a>
+                        </th>
+                        <th scope="col">
+                          <a href="" class="ng2-smart-sort-link sort">Orden</a>
+                        </th>
+
+                        <th scope="col" class="text-center">
+                          <a href="" class="ng2-smart-sort-link sort">Estado</a>
+                        </th>
+                        <th scope="col" class="text-center">
+                          <a href="" class="ng2-smart-sort-link sort">F. Registro</a>
+                        </th>
+                        <th scope="col" class="text-right">
+                          <a href="" class="ng2-smart-sort-link sort"></a>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let proyectoImagen of proyectoImagenes; index as i">
+
+
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto"><img width="140px"
+                            src="{{urlImage}}/archivos/proyectoImagen/{{ ((proyectoImagen.urlImagen==null)?'imagen.png':proyectoImagen.urlImagen) }}"
+                            alt=""></td>
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto"><img width="80px"
+                            src="{{urlImage}}/archivos/proyectoImagen/{{ ((proyectoImagen.urlMiniatura==null)?'imagen.png':proyectoImagen.urlMiniatura) }}"
+                            alt=""></td>
+
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto">{{ proyectoImagen.titulo }}
+                        </td>
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto">{{ proyectoImagen.orden }}
+                        </td>
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto" class="text-center"> {{
+                          proyectoImagen.estado.nombre }} </td>
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto" class="text-center"> {{
+                          proyectoImagen.fecha | date: "dd/MM/yyyy" }} </td>
+                        <td *ngIf="proyectoImagen.proyecto.idProyecto==proyecto.idProyecto" class="text-end">
+                          <a [routerLink]=""
+                            (click)="abrirModalSubirImagenes(modalSubirImagenes,proyectoImagen.idProyectoImagen)"
+                            class="mx-2" placement="left" ngbTooltip="Editar imagen de proyecto">
+                            <fa-icon [icon]="faPencil"></fa-icon>
+                          </a>
+                          <a href="javascript:void(0);" (click)="eliminarProyectoImagen(proyectoImagen)" class="mx-2"
+                            placement="left" ngbTooltip="Eliminar proyecto">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                          </a>
+                        </td>
+                      </tr>
+
+                      <tr *ngIf="proyectoImagenes.length == 0">
+                        <td colspan="6">
+                          <p class="text-center">
+                            No hay imágenes asociadas a esta producto.
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->
+
+<!--- ------------------
+Modal subir Imagen
+---------------------->
+<ng-template #modalSubirImagen let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Adjuntar imagen de proyecto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <upload-proyecto [proyecto]="proyecto"></upload-proyecto>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+<!--- ------------------
+Modal subir Imagenes adicionales
+---------------------->
+<ng-template #modalSubirImagenes let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Subir imágenes adicionales</h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body">
+    <upload-proyectoImagen [proyectoImagen]="proyectoImagen"
+      [erroresProyectoImagen]="erroresProyectoImagen"></upload-proyectoImagen>
+  </div>
+</ng-template>
+
+<!--FileManager Modal-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-basic-title">Administrador de archivos</h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <file-manager></file-manager>
+  </div>
+</ng-template>

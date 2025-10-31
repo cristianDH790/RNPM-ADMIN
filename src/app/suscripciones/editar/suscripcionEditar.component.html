@@ -1,0 +1,79 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading"
+  [config]="{ 'primaryColour': '#891e83 ', 'secondaryColour': '#891e83 ','tertiaryColour': '#891e83 ', backdropBorderRadius: '3px' }"
+  [template]="customLoadingTemplate"></ngx-loading>
+
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #suscripcionForm="ngForm">
+          <!--/row-->
+
+          <div class="row p-t-5">
+
+
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('telefono',1)">
+                <label class="control-label">Telefono * <small>{{validarError('telefono',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="suscripcion.telefono" name="telefono"
+                  placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('correo',1)">
+                <label class="control-label">Correo * <small>{{validarError('correo',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="suscripcion.correo" name="correo" placeholder="">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row p-t-5">
+            <div class="col-md-6">
+              <div class="form-group" [class]="validarError('estado',1)">
+                <label class="control-label">Estado <small>{{validarError('estado',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="suscripcion.estado"
+                  [compareWith]="compararEstado" name="estado" id="estado" tabindex="1">
+
+                  @for (estado of estados; track $index) {
+                  <option [ngValue]="estado">
+                    {{ estado.nombre }}
+                  </option>
+                  }
+
+                </select>
+              </div>
+            </div>
+            @if (suscripcion.idSuscripcion>0) {
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Fecha registro</label>
+                <input type="text" class="form-control" name="fecha" value="{{suscripcion.fecha | date: 'dd/MM/yyyy'}}"
+                  disabled>
+              </div>
+            </div>
+            }
+          </div>
+          <!--/row-->
+
+          <div class="form-actions py-3 d-flex gap-3">
+            <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+              <i class="fa fa-check"></i> Guardar</button>
+
+            <a [routerLink]="['/suscripciones/lista']" class="btn btn-secondary"><fa-icon [icon]="faArrowLeft"></fa-icon>
+              Regresar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->

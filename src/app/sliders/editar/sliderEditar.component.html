@@ -1,0 +1,229 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+  'fullScreenBackdrop':true,
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #sliderForm="ngForm">
+
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('nombre',1)">
+                <label class="control-label">Nombre * <small>{{validarError('nombre',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="slider.nombre" name="nombre" placeholder="">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('urlRecurso',1)">
+                <label class="control-label">Url recurso <small>{{validarError('urlRecurso',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="slider.urlRecurso" name="urlRecurso"
+                  placeholder="">
+              </div>
+            </div>
+
+          </div>
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Imagen escritorio</label>
+                <div>
+                  <input type="text" class="form-control" [(ngModel)]="slider.urlImagen1" name="urlImagen1"
+                    style="display:inline;max-width: 75%; margin-right: 5px;" readonly>
+                  <button (click)="abrirModalSubirImg(modalSubirImagen)" class="btn btn-secondary"
+                    style="display:inline;margin-right: 5px;">
+                    Adjuntar</button>
+                  <br>
+                  <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi,
+                    ancho: 2000 px
+                    y alto: 700 px.</small>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Visualización de imagen</label>
+                  <div class="box-img">
+                    <img [src]="imageSrc?imageSrc: urlImage+'/archivos/slider/imagen.png'" class="col-md-5">
+                  </div>
+                </div>
+                @if (slider.urlImagen1) {
+
+                <div class="form-group">
+                  <div>
+                    <a class="btn-eliminar" href="javascript:void(0);"
+                      (click)="eliminarImagen(slider,'urlImagen1')">Eliminar imagen de escritorio</a>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="col-md-6 pt-3">
+              <div class="form-group">
+                <label class="control-label">Imagen móvil</label>
+                <div>
+                  <input type="text" class="form-control" [(ngModel)]="slider.urlImagen2" name="urlImagen2"
+                    style="display:inline;max-width: 75%; margin-right: 5px;" readonly>
+                  <button (click)="abrirModalSubirImg2(modalSubirImagen2)" class="btn btn-secondary"
+                    style="display:inline;margin-right: 5px;">
+                    Adjuntar</button>
+                  <br>
+                  <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi,
+                    ancho: 720 px
+                    y alto: 650 px.</small>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Visualización de imagen</label>
+                  <div class="box-img">
+                    <img
+                      [src]="((imageSrc2!=null)?imageSrc2:((imageSrc2 != null)? imageSrc2 : urlImage+'/archivos/slider/imagen.png'))"
+                      class="col-md-5">
+                  </div>
+                </div>
+                @if (slider.urlImagen2) {
+                <div class="form-group">
+                  <div>
+                    <a class="btn-eliminar" href="javascript:void(0);"
+                      (click)="eliminarImagen(slider,'urlImagen2')">Eliminar imagen de movil</a>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <!-- <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('productoCategoria',1)">
+                <label class="control-label">Categoría *
+                  <small>{{validarError('productoCategoria',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="slider.productoCategoria"
+                  [compareWith]="compararProductoCategoria" name="productoCategoria" id="productoCategoria" tabindex="1">
+                  <option [ngValue]="{idProductoCategoria:0}">
+                    Seleccione
+                  </option>
+                  @for (productoCategoria of productoCategorias; track $index) {
+                  <option [ngValue]="productoCategoria">
+                    {{ productoCategoria.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div> -->
+            <div class="col-md-12">
+              <div class="form-group has-danger" [class]="validarError('pcategoria',1)">
+                <label class="control-label">Ubicación * <small>{{validarError('pcategoria',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="slider.pcategoria" [compareWith]="compararParametro"
+                  name="pcategoria" id="pcategoria" tabindex="1">
+                  @for (pcategoria of pcategorias; track $index) {
+                  <option [ngValue]="pcategoria">
+                    {{ pcategoria.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <div class="form-group has-danger">
+                <label class="control-label">Descripción </label>
+                <angular-editor placeholder="" [(ngModel)]="slider.descripcion" name="descripcion"
+                  [config]="editorConfigSmall">
+                </angular-editor>
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('orden',1)">
+                <label class="control-label">Orden * <small>{{validarError('orden',2)}}</small></label>
+                <input type="number" class="form-control" [(ngModel)]="slider.orden" name="orden" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" [class]="validarError('estado',1)">
+                <label class="control-label">Estado <small>{{validarError('estado',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="slider.estado" [compareWith]="compararEstado"
+                  name="estado" id="estado" tabindex="1">
+                  @for (estado of estados; track $index) {
+                  <option [ngValue]="estado">
+                    {{ estado.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+            @if (slider.idSlider>0) {
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Fecha registro</label>
+                <input type="text" class="form-control" name="fecha" value="{{slider.fecha | date: 'dd/MM/yyyy'}}"
+                  disabled>
+              </div>
+            </div>
+            }
+
+          </div>
+          <!--/row-->
+
+
+          <div class="form-actions py-3 d-flex gap-3">
+            <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+              <fa-icon [icon]="faCheck"></fa-icon>
+              Guardar</button>
+
+            <a [routerLink]="['/sliders/lista']" class="btn btn-secondary">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+              Regresar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->
+
+<!--- ------------------
+Modal subir Imagen
+---------------------->
+<ng-template #modalSubirImagen let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Adjuntar imagen escritorio de slider</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <upload-slider [slider]="slider"></upload-slider>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+<ng-template #modalSubirImagen2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Adjuntar imagen movil de slider</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <upload2-slider [slider]="slider"></upload2-slider>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>

@@ -1,0 +1,397 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* angular-editor-toolbar button i {
+  font-family: FontAwesome !important;
+  color: #474d6d !important;
+
+} */
+
+.error {
+  .form-control {
+    border-color: red;
+  }
+
+  .form-select {
+    border-color: red;
+  }
+
+  .control-label small {
+    color: red;
+  }
+  .error .control-label small {
+  color: red ;
+}
+}
+
+
+
+.card-body .page-title {
+  color: #e72181 !important;
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.card-body .card-title {
+  color: #e72181 !important;
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.card-body h5.card-title {
+  color: #e72181 !important;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  color: #fff;
+  background: #555 !important;
+  border: 1px solid #555 !important;
+  display: block;
+  height: 40px;
+  font-size: 14px;
+}
+
+.btn-primary:hover{background: #e72181 !important;color: #fff !important;border: 1px solid #e72181 !important;}
+
+.btn-secondary {
+  height: 39px;
+  color: #fff !important;
+  font-size: 13px;
+  padding-top: 8px;
+}
+
+.table-responsive {
+  margin-top: 20px;
+}
+
+.table-responsive .table thead tr th {
+  background: #e6ecf9;
+  padding: 15px 10px;
+}
+
+a {
+  color: #e72181;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 0px;
+  display: block;
+}
+
+.modal-title {
+  color: #e72181 !important;
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.input-group .btn-primary {
+  position: relative !important;
+  z-index: 2 !important;
+  display: block !important;
+  margin-top: 20px !important;
+  background: #e72181 !important;
+}
+
+.modal-header {
+  position: relative;
+}
+
+.modal-header .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: #e72181;
+  color: #fff;
+  border: none;
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+}
+
+.modal-header .close:hover {
+  background: #e72181;
+  color: #fff;
+}
+
+#recoverform {
+  display: none;
+}
+
+#main-wrapper {
+  background: #eef5f9;
+  height: 100vh;
+}
+
+.card {
+  border: none;
+  border-radius: 0;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+  color: #fff;
+}
+
+hr {
+  margin: 0 0 20px 0;
+}
+
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  font-size: 14px;
+}
+
+.form-select {
+  font-size: 14px;
+  height: 40px;
+}
+
+input {
+  font-size: 14px;
+  height: 40px;
+}
+
+.form-control {
+  font-size: 14px;
+}
+
+label {
+  font-size: 14px;
+}
+
+.mat-display-medium,
+.mat-typography .mat-display-medium,
+.mat-typography h2 {
+  font: 400 2.812rem / 3.25rem Roboto, sans-serif;
+  letter-spacing: 0;
+  margin: 0 0 .5em;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 0;
+  color: #e72181;
+}
+
+div:where(.swal2-container) .swal2-html-container {
+  z-index: 1;
+  justify-content: center;
+  margin: 0;
+  padding: 5px 1.6em .3em;
+  overflow: auto;
+  color: inherit;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: normal;
+  text-align: center;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+#navbarSupportedContent .dropdown-menu {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 0 4px #d7d7d7;
+  padding: 0;
+}
+
+#navbarSupportedContent .dropdown-item {
+  padding: 10px 20px;
+  border-radius: 0;
+}
+
+#navbarSupportedContent .dropdown-item:focus,
+#navbarSupportedContent .dropdown-item:hover {
+  color: #fff;
+  background-color: #555;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
+  border: 0;
+  border-radius: .25em;
+  background: initial;
+  background-color: #e72181 !important;
+  color: #fff;
+  font-size: 1em;
+}
+
+.breadcrumb-item.active {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  padding-left: var(--bs-breadcrumb-item-padding-x);
+  font-size: 12px;
+}
+
+.breadcrumb-item a{font-size: 12px;vertical-align: super;}
+
+.box-img img{
+  display: block;
+  width: 300px;
+}
+
+@media screen and (max-width:767px) {
+
+  #main-wrapper {
+
+    height: auto;
+
+  }
+
+  .btn-secondary {
+    height: auto;
+  }
+
+  .sli {
+    overflow-x: scroll;
+  }
+
+  .sli select {
+    width: auto;
+  }
+
+  .sli input {
+    width: 150px;
+  }
+
+  .sli .btn-primary {
+    width: 100px;
+  }
+
+  #menu-movil .float-start {
+    float: none !important;
+  }
+
+  #menu-movil .d-flex {
+    display: block !important;
+  }
+
+  #menu-movil .float-end {
+    float: none !important;
+  }
+
+  #menu-movil .navbar-toggler{
+    float: right;
+    display: block;
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+
+  #menu-movil .navbar-toggler span{
+    color: #fff;
+    font-size: 20px;
+  }
+
+  .box-img img{
+    display: block;
+    width: 100%;
+  }
+
+  .btn-primary {
+  color: #fff;
+  background: #e72181 !important;
+  border: 1px solid #e72181 !important;
+  display: block;
+  height: auto;
+  font-size: 14px;
+}
+
+}
+
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #e72181;
+  background-color: #e72181;
+  border-color: var(--bs-nav-tabs-link-active-border-color);
+}
+.nav-tabs .nav-link {
+  background: #ccc;
+  color: #e72181;
+}
+
+.form-control:focus {
+  color: var(--bs-body-color);
+  background-color: transparent;
+  border-color: #e72181;
+  outline: 0;
+  box-shadow: none;
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.text-end a{
+  cursor: pointer;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  border: 1px solid #5c5c5c;
+  margin-right: 4px;
+  background: #5c5c5c;
+  padding: 5px;
+  color: #fff;
+  border-radius: 2px;
+  float: left;
+  max-width: 100% !important;
+  width: 100% !important;
+
+}
+
+::ng-deep .backdrop {
+  position:fixed !important;
+}
+
+
+.active > .page-link, .page-link.active {
+  z-index: 3;
+  color: #ffffff !important;
+  background-color:#d63384 !important;
+  border-color: #d63384   !important;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color:#d63384 !important ;
+
+}
+
+.page-link {
+
+  color: #d63384 !important;
+
+}
+
+
+

@@ -1,0 +1,12 @@
+.card-body .page-title{color: #e72181 !important;display: block;font-size: 18px;font-weight: 600;}
+.card-body .card-title{color: #e72181 !important;display: block;font-size: 18px;font-weight: 600;}
+.card-body h5.card-title{color: #000 !important;display: block;font-size: 16px;font-weight: 600;}
+.btn-primary{color: #fff;background: #e72181 !important;border: 1px solid #e72181 !important;display: block;height: 40px;}
+.btn-secondary{height: 40px;}
+.table-responsive{margin-top: 20px;}
+.table-responsive .table thead tr th{background: #e6ecf9;padding: 15px 10px;}
+a {color: #e72181;text-decoration: none;cursor: pointer;}
+.modal-title{color: #e72181 !important;display: block;font-size: 18px;font-weight: 600;}
+.input-group .btn-primary {position: relative !important;z-index: 2 !important;display: block !important;margin-top: 20px !important;background: #e72181 !important;}
+.modal-header{position: relative;}
+.modal-header .close{position: absolute;right: 0;top: 0;}

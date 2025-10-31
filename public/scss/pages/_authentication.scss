@@ -1,0 +1,72 @@
+//
+// Login & Register Page
+//
+.auth-wrapper {
+  min-height: 100vh;
+  position: relative;
+
+  .auth-box {
+    background: $white;
+    padding: 20px;
+    box-shadow: $shadow;
+    max-width: 400px;
+    min-width: 300px;
+    &.on-sidebar {
+      top: 0px;
+      right: 0px;
+      height: 100%;
+      margin: 0px;
+      position: absolute;
+    }
+    @include media-breakpoint-down(md) {
+      &.on-sidebar {
+        height: auto;
+      }
+    }
+  }
+
+  .auth-sidebar {
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    overflow: auto;
+    margin: 0px;
+    top: 0px;
+  }
+}
+
+@media(max-width:767px) {
+  .auth-wrapper {
+    .auth-sidebar {
+      position: relative;
+      max-width: 100%;
+      width: 100%;
+      margin: 40px 0 60px;
+    }
+
+    .demo-text {
+      margin-top: 30px;
+    }
+  }
+}
+
+//
+// 404 page
+//
+.error-box {
+  height: 100%;
+  position: fixed;
+  background: url(../../images/background/error-bg.jpg) no-repeat center center #fff;
+  width: 100%;
+
+  .error-body {
+    padding-top: 5%;
+  }
+
+  .error-title {
+    font-size: 210px;
+    font-weight: 900;
+    text-shadow: 4px 4px 0 #fff, 6px 6px 0 $dark;
+    line-height: 210px;
+  }
+}

@@ -1,0 +1,19 @@
+// All the custom components imports here
+
+// core
+@import 'core/core';
+
+// components
+@import "components/accordian";
+@import "components/alert";
+@import "components/breadcrumb";
+@import "components/buttons";
+@import "components/card";
+@import "components/dropdown";
+@import "components/datepicker";
+@import "components/forms";
+@import "components/scafholdings";
+@import "components/tables";
+
+// rtl
+@import 'layouts/rtl/rtl';

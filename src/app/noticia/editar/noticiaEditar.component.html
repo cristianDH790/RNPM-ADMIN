@@ -1,0 +1,248 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #noticiaForm="ngForm">
+          <!-- <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('titulo',1)">
+                <label class="control-label">Título * <small>{{validarError('titulo',2)}}</small></label>
+                <input type="text" class="form-control"  [(ngModel)]="noticia.usuario"
+                  name="nombre" placeholder="">
+              </div>
+            </div>
+          </div> -->
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('titulo',1)">
+                <label class="control-label">Título * <small>{{validarError('titulo',2)}}</small></label>
+                <input type="text" class="form-control" (keyup)="keyup($event.target )" [(ngModel)]="noticia.titulo"
+                  name="nombre" placeholder="">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('urlAmigable',1)">
+                <label class="control-label">Url amigable <small>{{validarError('urlAmigable',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="noticia.urlAmigable" name="urlAmigable">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('ptipo',1)">
+                <label class="control-label">Categoría * <small>{{validarError('ptipo',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="noticia.ptipo" [compareWith]="compararParametro"
+                  name="ptipo" id="ptipo" tabindex="1">
+                  @for (ptipo of ptipos; track $index) {
+                  <option [ngValue]="ptipo">
+                    {{ ptipo.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('orden',1)">
+                <label class="control-label">Orden * <small>{{validarError('orden',2)}}</small></label>
+                <input type="number" class="form-control" [(ngModel)]="noticia.orden" name="orden" placeholder="">
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <label class="control-label">Resumen <small
+                  style="color: red !important;">{{validarError('resumen',2)}}</small></label>
+              <angular-editor placeholder="" [(ngModel)]="noticia.resumen" name="resumen" [config]="editorConfigSmall">
+              </angular-editor>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <label class="control-label">Contenido <small>{{validarError('contenido',2)}}</small></label>
+
+              <angular-editor placeholder="" [(ngModel)]="noticia.contenido" name="contenido" [config]="editorConfig">
+                <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+                  <ae-toolbar-set>
+                    <ae-button #botonFileManager iconClass="fa fa-folder" title="Administrador de archivos"
+                      (buttonClick)="fileManager(content,'contenido')"></ae-button>
+                    <ae-button *ngIf="imgSelected!=''" #botonAgregar iconClass="fa fa-image" title="Agregar imagen"
+                      (buttonClick)="executeCommandFn('insertHtml', imgSelected)"></ae-button>
+
+                  </ae-toolbar-set>
+                </ng-template>
+              </angular-editor>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Imagen </label>
+                <div>
+                  <input type="text" class="form-control" [(ngModel)]="noticia.urlImagen" name="urlImagen"
+                    style="display:inline;max-width: 75%; margin-right: 5px;" readonly>
+                  <button (click)="abrirModalSubirImg(modalSubirImagen)" class="btn btn-secondary"
+                    style="display:inline;margin-right: 5px;">
+                    Adjuntar</button>
+                  <br>
+                  <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi, ancho: 800 px
+                    y alto: 600 px.</small>
+                </div>
+
+                @if (noticia.urlImagen && noticia.idNoticia>0) {
+                <div class="form-group">
+                  <div>
+                    <a class="btn-eliminar" href="javascript:void(0);" (click)="eliminarImagen(noticia)">Eliminar imagen
+                    </a>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Visualización de imagen</label>
+                <div class="box-img">
+                  <!-- <img
+                    [src]="((imageSrc!=null)?imageSrc:((urlImagen1 != null)? urlImagen1 : urlImage+'/archivos/noticia/imagen.png'))"
+                    class="col-md-5"> -->
+                  <img
+                    [src]="((imageSrc!=null)?imageSrc:((urlImagen1 != null)? urlImagen1 : urlImage+'/archivos/noticia/imagen.png'))"
+                    class="col-md-5">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <label class="control-label d-block">Palabras clave SEO</label>
+              <textarea class="form-control w-100" [(ngModel)]="noticia.palabrasClaveSeo"
+                name="palabrasClaveSeo"></textarea>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <label class="control-label d-block">Título SEO</label>
+              <textarea class="form-control w-100" [(ngModel)]="noticia.tituloSeo" name="tituloSeo"></textarea>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <label class="control-label d-block">Descripción SEO</label>
+              <textarea class="form-control w-100" [(ngModel)]="noticia.descripcionSeo"
+                name="descripcionSeo"></textarea>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <div class="form-group" [class]="validarError('proyecto',1)">
+                <label class="control-label">Proyecto <small>{{validarError('proyecto',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="noticia.proyecto" name="proyecto" id="proyecto"
+                  tabindex="1" [compareWith]="compararProyecto">
+                  @for (proyecto of proyectos; track $index) {
+                  <option [ngValue]="proyecto">
+                    {{ proyecto.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group" [class]="validarError('estado',1)">
+                <label class="control-label">Estado * <small>{{validarError('estado',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="noticia.estado" [compareWith]="compararEstado"
+                  name="estado" id="estado" tabindex="1">
+                  @for (estado of estados; track $index) {
+                  <option [ngValue]="estado">
+                    {{ estado.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" [class]="validarError('fechaPublicacion',1)">
+                <label class="control-label">Fecha de publicación *
+                  <small>{{validarError('fechaPublicacion',2)}}</small></label>
+                <input type="date" class="form-control" name="fechaPublicacion" [(ngModel)]="noticia.fechaPublicacion">
+              </div>
+            </div>
+            @if (noticia.idNoticia>0) {
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Fecha registro</label>
+                <input type="text" class="form-control" name="fecha" value="{{noticia.fecha | date: 'dd/MM/yyyy'}}"
+                  disabled>
+              </div>
+            </div>
+            }
+          </div>
+
+          <div class="form-actions py-3 d-flex gap-3">
+            <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+              <fa-icon [icon]="faCheck"></fa-icon>
+              Guardar</button>
+
+            <a [routerLink]="['/noticias/lista']" class="btn btn-secondary">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+              Regresar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- ------------------
+Modal subir Imagen
+---------------------->
+<ng-template #modalSubirImagen let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Adjuntar imagen escritorio de noticia</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <upload-noticia [noticia]="noticia"></upload-noticia>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+
+<!--FileManager Modal-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-basic-title">Administrador de archivos</h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <file-manager></file-manager>
+  </div>
+</ng-template>

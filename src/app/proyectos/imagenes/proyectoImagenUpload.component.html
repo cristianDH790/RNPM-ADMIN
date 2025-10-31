@@ -1,0 +1,124 @@
+<div class="my-container">
+  <ng-template #customLoadingTemplate>
+
+  </ng-template>
+
+  <ngx-loading [show]="loading"
+    [config]="{ 'primaryColour': '#cd2a1f ', 'secondaryColour': '#cd2a1f ','tertiaryColour': '#cd2a1f ', backdropBorderRadius: '3px' }"
+    [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="row p-t-5">
+
+        <div class="col-md-6">
+          <div class="form-group has-danger" [class]="validarError('titulo',1)">
+            <label class="control-label">Título2 <small>{{validarError('titulo',2)}}</small></label>
+            <input type="text" class="form-control" [(ngModel)]="proyectoImagen.titulo" name="titulo" placeholder="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group has-danger" [class]="validarError('orden',1)">
+            <label class="control-label">Orden <small>{{validarError('orden',2)}}</small></label>
+            <input type="text" class="form-control" [(ngModel)]="proyectoImagen.orden" name="orden" placeholder="">
+          </div>
+        </div>
+
+
+      </div>
+      <div class="row p-t-5">
+
+
+        <div class="col-md-6">
+          <div class="form-group has-danger" [class]="validarError('estado',1)">
+            <label class="control-label">Estado <small>{{validarError('estado',2)}}</small></label>
+            <select class="form-control form-select custom-select mr-sm-2" [(ngModel)]="proyectoImagen.estado"
+              [compareWith]="compararEstado" name="estado" id="estado" tabindex="1">
+              <option *ngFor="let estado of estados" [ngValue]="estado">
+                {{ estado.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-6">
+          <div class="form-group has-danger" [class]="validarError('urlImagen',1)">
+            <label class="control-label">Imagen <small>{{validarError('urlImagen',2)}}</small></label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" (change)="seleccionarArchivo($event,'imagen')" class="custom-file-input"
+                  [(ngModel)]="proyectoImagen.urlImagen">
+                <label style="display:block; width: 100%; margin:10px 0;" class="custom-file-label">{{etiqueta}}</label>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi, ancho: 1000 px
+            y alto: 1000 px.</small>
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <div>
+                <img width="200px"
+                  [src]="((imageSrc!='')?imageSrc:urlImage+'/archivos/proyectoImagen/' + ((proyectoImagen.urlImagen != null)? proyectoImagen.urlImagen : 'imagen.png'))">
+              </div>
+
+              <div>
+                <a class="btn-eliminar" href="javascript:void(0);"
+                  (click)="eliminarImagen(proyectoImagen,'urlImagen')">Eliminar imagen de escritorio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group has-danger">
+            <label class="control-label">Imagen</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" (change)="seleccionarArchivo($event,'miniatura')" class="custom-file-input">
+                <label style="display:block; width: 100%; margin:10px 0;"
+                  class="custom-file-label">{{etiqueta2}}</label>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">Imagen en formato: JPG, resolución: 72 ppi, ancho: 1000 px
+            y alto: 1000 px.</small>
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <div>
+                <img width="200px"
+                  [src]="((imageSrc2!='')?imageSrc2:urlImage+'/archivos/proyectoImagen/' + ((proyectoImagen.urlMiniatura != null)? proyectoImagen.urlMiniatura : 'imagen.png'))">
+              </div>
+              <div>
+                <a class="btn-eliminar" href="javascript:void(0);"
+                  (click)="eliminarImagen(proyectoImagen,'urlMiniatura')">Eliminar imagen de escritorio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="form-actions m-t-5">
+        <div class="input-group-append d-flex gap-3">
+          <button (click)="subirArchivo()" class="btn btn-primary" type="button"
+            id="inputGroupFileAddon04">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrar()">Cerrar</button>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+</div>

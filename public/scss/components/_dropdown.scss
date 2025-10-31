@@ -1,0 +1,51 @@
+@keyframes animation-dropdown-menu-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes animation-dropdown-menu-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes animation-dropdown-menu-move-up-down-md {
+  from {
+    top: 1px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+@-webkit-keyframes animation-dropdown-menu-move-up-down-md {
+  from {
+    top: 1px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+.dropdown-menu-animate-up {
+  -webkit-animation: animation-dropdown-menu-fade-in 0.5s ease 1,
+    animation-dropdown-menu-move-up 0.5s ease-out 1;
+  animation: animation-dropdown-menu-fade-in 0.5s ease 1,
+    animation-dropdown-menu-move-up 0.5s ease-out 1;
+}
+
+@include media-breakpoint-down(md) {
+  .dropdown-menu-animate-up {
+    -webkit-animation: animation-dropdown-menu-fade-in 0.5s ease 1,
+      animation-dropdown-menu-move-up-down-md 0.5s ease-out 1;
+    animation: animation-dropdown-menu-fade-in 0.5s ease 1,
+      animation-dropdown-menu-move-up-down-md 0.5s ease-out 1;
+  }
+}

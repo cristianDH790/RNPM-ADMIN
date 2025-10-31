@@ -1,0 +1,55 @@
+.wizard-navbar {
+  padding: 0px;
+  margin: 50px 0 50px 0;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    height: 2px;
+    background: $border-color;
+    content: "";
+    position: absolute;
+    width: 75%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+  }
+
+  li {
+    list-style: none;
+    text-align: center;
+
+    .round-tabs {
+      padding: 20px;
+      background: white;
+      position: relative;
+      z-index: 2;
+      border: 1px solid $border-color;
+      border-radius: 100%;
+    }
+
+    > a {
+      padding: 0.5rem 0;
+    }
+
+    > a.active .round-tabs {
+      background: $info;
+      border-color: $info !important;
+      color: $white;
+    }
+  }
+}
+
+#ngx .ng-invalid,
+.ng-touched.ng-invalid {
+  border-color: $danger;
+}
+
+#ngx .ng-valid,
+.ng-touched.ng-valid {
+  border-color: $success;
+}

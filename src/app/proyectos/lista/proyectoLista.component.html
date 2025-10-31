@@ -1,0 +1,155 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+     'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de formacion</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form #filtroForm="ngForm">
+          <div class="d-flex justify-content-start bg-light border gap-3 py-3 px-3 sli">
+            <div class="form-group">
+              <small id="name" class="form-text">Ordenar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="proyectoFiltro.ordenCriterio"
+                name="ordenCriterio">
+                <option value="fecha">Fecha de registro</option>
+                <option value="nombre">Nombre</option>
+                <option value="orden">Orden</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="proyectoFiltro.ordenTipo"
+                name="ordenProyecto">
+                <option value="asc">Asc</option>
+                <option selected value="desc">Desc</option>
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <small id="name" class="form-text">Buscar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="proyectoFiltro.parametro" name="parametro">
+                <option selected value="nombre">Nombre</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <input type="text" class="form-control" [(ngModel)]="proyectoFiltro.valor" name="valor" placeholder="">
+            </div>
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estado</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="proyectoFiltro.idEstado" name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                @for (estado of estados; track $index) {
+                <option [ngValue]="estado.idEstado">{{ estado.nombre }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar
+              </button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start mt-3 gap-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/proyectos/editar']">
+            <fa-icon [icon]="faNewspaper"></fa-icon>
+            Nuevo proyecto</button>
+          <!-- <a [routerLink]="['/dashboard/inicio']" class="btn btn-secondary">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+            Regresar</a> -->
+
+          <div class="form-group">
+            <select class="form-select  custom-select float-right" [(ngModel)]="proyectoFiltro.registros"
+              name="registros" (ngModelChange)="actualizarPaginacion($event)">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th style="width: 150px;" scope="col"><a class="ng2-smart-sort-link sort">Imagen</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Nombre</a></th>
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Orden</a>
+                </th>
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Estado</a></th>
+                <th style="width: 150px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Destacado</a></th>
+                <!-- <th style="width: 150px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Fecha de proyecto</a></th> -->
+                <th style="width: 100px;" scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Fecha</a>
+                </th>
+                <th style="width: 100px;" scope="col" class="text-right"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (proyecto of proyectos; track $index) {
+              <tr>
+                <td><img width="140px"
+                    src="{{urlImage}}/archivos/proyecto/{{ ((proyecto.urlImagen==null)?'imagen.png':proyecto.urlImagen) }}"
+                    alt=""></td>
+
+                <td class="text-left">{{ proyecto.nombre }}</td>
+                <td class="text-center">{{ proyecto.orden }}</td>
+                <td class="text-center">{{ proyecto.estado.nombre }} </td>
+                <!-- <td class="text-center">{{ proyecto.fechaProyecto | date:"dd/MM/yyyy" }}</td> -->
+                <td class="text-center">{{ (proyecto.destacado==1)?'SI':'NO' }}</td>
+                <td class="text-center">{{ proyecto.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/proyectos/editar/', proyecto.idProyecto]" class="mx-2" placement="left"
+                    ngbTooltip="Editar proyecto">
+                    <fa-icon [icon]="faPencil"></fa-icon>
+                  </a>
+
+                  <a href="javascript:void(0);" class="m-r-5 m-l-5" placement="left" (click)="eliminar(proyecto)"
+                    ngbTooltip="Eliminar proyecto">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a>
+
+                </td>
+              </tr>
+              }
+              @if (proyectos.length == 0) {
+              <tr>
+                <td colspan="8">
+                  <p class="text-center">No hay proyecto existentes.</p>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          <paginator class="d-flex justify-content-end" [paginator]="paginator()"
+            (childEvent)="cambiarPagina($event)" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

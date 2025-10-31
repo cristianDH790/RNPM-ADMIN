@@ -1,0 +1,120 @@
+::ng-deep .ventanaFileManager .modal-dialog {
+  max-width: 80%;
+  width: 80%;
+
+}
+::ng-deep .ventanaFileManager .modal-body {
+  height: 600px;
+}
+
+::ng-deep .ventanaFileManager .modal-body .carpetas{
+  max-height: 500px;
+  min-height: 500px;
+  background: #f1f1f1;
+    padding: 15px;
+}
+::ng-deep .ventanaFileManager .modal-body .archivos{
+  max-height: 500px;
+  min-height: 500px;
+  overflow-y: scroll;
+  background: #f1f1f1;
+  padding: 15px;
+}
+::ng-deep .ventanaFileManager .modal-body .archivos h6{
+  color: black;
+  font-weight: 400;
+
+}
+.mostrar{
+  display: block;
+}
+.ocultar{
+  display: none;
+}
+.nivel1{
+  margin-left: 0px;
+}
+.nivel2{
+  margin-left: 20px;
+}
+.nivel3{
+  margin-left: 40px;
+}
+.nivel4{
+  margin-left: 60px;
+}
+.nivel5{
+  margin-left: 80px;
+}
+
+::ng-deep .ventanaNueva .modal-dialog {
+  max-width: 30%;
+  width: 30%;
+  top:25%;
+}
+.selected{
+  background: #dbe2ee;
+}
+
+::ng-deep .ventanaSeleccion .modal-dialog {
+  max-width: 40%;
+  width: 40%;
+
+}
+
+
+::ng-deep .ventanaUpload .modal-dialog {
+  max-width: 30%;
+  width: 30%;
+  top:25%;
+}
+
+::ng-deep .ventanaRenombrar .modal-dialog {
+  max-width: 30%;
+  width: 30%;
+  top:25%;
+}
+
+::ng-deep .ventanaCopiar .modal-dialog {
+  max-width: 30%;
+  width: 30%;
+  top:15%;
+}
+
+::ng-deep .ventanaFileventanaCopiarManager .modal-body {
+  height: 500px;
+}
+.carpeta a{color: #4c4f52 !important;
+  display: block;
+  padding: 10px;
+  background: #e9e9e9;
+  border-bottom: 1px solid #d9d9d9;}
+.carpeta a:hover{color: #ffffff !important;
+    background: #4c4f52;}
+.carpeta .active{
+  font-weight: 600;
+  color: #fff !important;
+  background: #4c4f52;
+}
+.active{
+  font-weight: 600;
+  color: #4c4f52 !important;
+}
+.btn-primary {
+  margin-right: 7px;
+  text-align: center;
+  padding: 5px 20px;
+  width: 150px;
+}
+small, .small {
+  font-size: 0.875em;
+  display: block;
+  margin-bottom: 15px;
+}
+.table thead th, .table th {
+  font-weight: 700;
+  background: #d9d9d9;
+  padding: 8px 15px;
+}
+.table tbody td{background: #fff;border-bottom: 1px solid #ccc;}
+.table tbody .selected td{background: #dbe2ee;border-bottom: 1px solid #ccc;}

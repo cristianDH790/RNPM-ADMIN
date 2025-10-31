@@ -1,0 +1,317 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52', 'secondaryColour': '#4c4f52', 'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+<form #filtroForm="ngForm">
+  <div class="d-flex justify-content-start  mb-3 p-l-10 p-r-10 p-t-5 ">
+    <div class="form-group " style="margin-right: 10px;">
+      <button type="button" (click)="uploadArchivo()" class="form-control btn btn-secondary btn-popup">
+        <fa-icon [icon]="faUpload"></fa-icon>
+        Subir</button>
+    </div>
+    <div class="form-group" style="margin-right: 10px;">
+      <button type="button" (click)="nuevoDirectorio()" class="form-control btn btn-secondary btn-popup"> <fa-icon
+          [icon]="faFolder"></fa-icon>
+        Nueva carpeta</button>
+    </div>
+    <div class="form-group" style="margin-right: 10px;">
+      <button type="button" [disabled]="!archivoSeleccionado" (click)="descargar()"
+        class="form-control btn btn-secondary btn-popup"> <fa-icon [icon]="faDownload"></fa-icon>
+        Descargar</button>
+    </div>
+
+    <div class="form-group" style="margin-right: 10px;">
+      <button type="button" [disabled]="!archivoSeleccionado" (click)="renombrarArchivo()"
+        class="form-control btn btn-secondary btn-popup"> <fa-icon [icon]="faEdit"></fa-icon>
+        Renombrar</button>
+    </div>
+    <div class="form-group" style="margin-right: 10px;">
+      <button type="button" [disabled]="!archivoSeleccionado" (click)="copiarArchivo(carpetaStorage)"
+        class="form-control btn btn-secondary btn-popup"> <fa-icon [icon]="faCopy"></fa-icon>
+        Copiar</button>
+    </div>
+    <div class="form-group" style="margin-right: 10px;">
+      <button type="button" [disabled]="!desabilitaEliminar" (click)="eliminar(carpetaStorage)"
+        class="form-control btn btn-secondary btn-popup"> <fa-icon [icon]="faTrash"></fa-icon>
+        Eliminar</button>
+    </div>
+    <div class="form-group" style="margin-right: 10px;">
+      <button type="button" [disabled]="!archivoSeleccionado" (click)="seleccionar()"
+        class="form-control btn btn-secondary btn-popup"> <fa-icon [icon]="faCheck"></fa-icon>
+        Seleccionar</button>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-md-2 carpetas">
+    <a style="cursor:pointer" (click)="raiz(carpetaStorage)" class="mostrar cajita-principal"
+      [class.active]="carpetaSeleccionada.nombre=='{{carpetaStorage}}'">
+      <fa-icon [icon]="faFolderOpen"></fa-icon>
+      <span> {{carpetaStorage}}</span>
+    </a>
+    @for (carpeta of carpetas; track $index) {
+    <div class="carpeta">
+      <a style="cursor:pointer" (click)="verCarpetas(carpeta,carpetaStorage)"
+        [class.active]="carpetaSeleccionada.nombre==carpeta.nombre" [class]="mostrarOcultar(carpeta)">
+        @if(carpeta.nombre!=carpetaSeleccionada.nombre && carpeta.nombre!=carpetaSeleccionada.padre){
+        <fa-icon [icon]="faFolder"></fa-icon>
+        }
+
+        @if(carpeta.nombre==carpetaSeleccionada.nombre || carpeta.nombre==carpetaSeleccionada.padre){
+        <fa-icon [icon]="faUpload"></fa-icon>
+        }
+
+        <span> {{carpeta.nombre}} </span>
+
+        @if (carpeta.subCarpeta && carpeta.nombre!=carpetaSeleccionada.nombre &&
+        carpeta.nombre!=carpetaSeleccionada.padre ) {
+        <fa-icon [icon]="faPlus"></fa-icon>
+        }
+
+        @if (carpeta.subCarpeta && carpeta.nombre==carpetaSeleccionada.nombre || carpeta.subCarpeta &&
+        carpeta.nombre==carpetaSeleccionada.padre) {
+        <fa-icon [icon]="faMinus"></fa-icon>
+        }
+
+      </a>
+    </div>
+    }
+
+  </div>
+  @if (archivos && archivos.length>0) {
+  <div class="col-md-10">
+    <div class="archivos">
+      <table class="table table-responsive ">
+        <thead>
+          <th></th>
+          <th>Nombre</th>
+          <th class="text-center">Peso</th>
+          <th class="text-right" style="width: 135px;">F. Modificación</th>
+        </thead>
+        <tbody>
+          @for (archivo of archivos; track $index) {
+          <tr [class.selected]="archivoSeleccionado==archivo">
+            <td (click)="clickEvent(archivo)" style="width: 100px; cursor:pointer" class="text-left"><img width="70"
+                [src]="mostrarImagen(archivo)" alt="{{archivo.nombre}}"></td>
+            <td style="cursor: pointer;" (click)="clickEvent(archivo)">{{archivo.nombre}}</td>
+            <td style="cursor: pointer;" (click)="clickEvent(archivo)" class="text-center">{{archivo.size}} KB</td>
+            <td style="cursor: pointer;" (click)="clickEvent(archivo)" class="text-right">{{archivo.lastModif}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+
+  @if (archivos.length==0) {
+  <div class="col-md-10 archivos row">
+    <div class="col-md-12">
+      <h4>No se encontraron archivos en el directorio actual</h4>
+    </div>
+  </div>
+  }
+</div>
+
+
+
+
+
+<!--MODAL NUEVO DIRECTORIO-->
+<ng-template #modalNueva id="nueva" let-modal>
+  <ng-template #customLoadingTemplate></ng-template>
+
+  <ngx-loading [show]="loading2"
+    [config]="{'primaryColour': '#4c4f52', 'secondaryColour': '#4c4f52', 'tertiaryColour': '#4c4f52'}"
+    [template]="customLoadingTemplate"></ngx-loading>
+  <div class="modal-header">
+    <h4 class="modal-title">Nuevo directorio</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body"
+    style="overflow-y: scroll; max-height:30%;  margin-top: 0px; margin-bottom:0px;height: 200px; overflow-y: auto;">
+    <div class="form-group">
+      <label for="">Ingrese el nombre del nuevo directorio</label>
+      <input type="text" class="form-control" name="directorio" placeholder="" [(ngModel)]="directorio">
+    </div>
+    <small for="">Ruta "{{url_imagen+'/archivos/'+carpetaSeleccionada.ruta}}"</small>
+    <button class="btn btn-primary form-control " (click)="crearDirectorio(carpetaStorage);loading=true;">Crear</button>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+
+<!--MODAL SELECCION-->
+<ng-template #modalSeleccion id="seleccion" let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Seleccionar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body row" style="  margin-top: 0px; margin-bottom:0px; ">
+    <div class="form-group col-md-12">
+      <label for="">Ruta </label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Ruta" [(ngModel)]="ruta">
+        <span class="input-group-text" style="cursor: pointer;" (click)="copiarTexto()">
+          <fa-icon [icon]="faCopy"></fa-icon>
+        </span>
+      </div>
+    </div>
+    @if (esImage) {
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="">Ancho </label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="pixeles" [(ngModel)]="ancho">
+        </div>
+      </div>
+    </div>
+    }
+    @if (esImage) {
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="">Alto </label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="pixeles" [(ngModel)]="alto">
+        </div>
+      </div>
+    </div>
+    }
+    @if (esImage) {
+    <div class="col-md-6">
+      <div class="form-group">
+        <button class="btn btn-primary " (click)="enviar()">Aceptar</button>
+      </div>
+    </div>
+    }
+
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+
+<!--MODAL SUBIR ARCHIVO-->
+<ng-template #modalUpload id="upload" let-modal>
+  <ng-template #customLoadingTemplate></ng-template>
+
+  <ngx-loading [show]="loading2"
+    [config]="{'primaryColour': '#4c4f52', 'secondaryColour': '#4c4f52', 'tertiaryColour': '#4c4f52'}"
+    [template]="customLoadingTemplate"></ngx-loading>
+  <div class="modal-header">
+    <h4 class="modal-title">Subir archivo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body"
+    style="overflow-y: scroll; max-height:30%;  margin-top: 0px; margin-bottom:0px;height: 200px; overflow-y: auto;">
+    <div class="form-group">
+      <label for="">Adjunte archivo</label>
+      <input type="file" class="form-control" (change)="seleccionarArchivo($event)" [(ngModel)]="urlArchivo">
+    </div>
+    <!--<small for="">ruta "{{url_imagen+'/archivos/'+carpetaSeleccionada.ruta}}"</small>-->
+    <button class="btn btn-primary form-control " (click)="subirArchivo(carpetaStorage)">Subir</button>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+
+<!--MODAL RENOMBRAR-->
+<ng-template #modalRenombrar id="renombrar" let-modal>
+  <ng-template #customLoadingTemplate></ng-template>
+
+  <ngx-loading [show]="loading2"
+    [config]="{'primaryColour': '#4c4f52', 'secondaryColour': '#4c4f52', 'tertiaryColour': '#4c4f52'}"
+    [template]="customLoadingTemplate"></ngx-loading>
+  <div class="modal-header">
+    <h4 class="modal-title">Renombrar archivo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body"
+    style="overflow-y: scroll; max-height:30%;  margin-top: 0px; margin-bottom:0px;height: 200px; overflow-y: auto;">
+    <div class="form-group">
+      <label for="">Ingrese el nuevo nombre del archivo</label>
+      <input type="text" class="form-control" name="nombreArchivo" placeholder="" [(ngModel)]="nombreArchivo">
+    </div>
+    <small for="">Ruta archivo anterior:
+      "{{url_imagen+'/archivos/'+((carpetaSeleccionada.nombre=="")?archivoSeleccionado.nombre:carpetaSeleccionada.ruta+'/'+archivoSeleccionado.nombre)}}"</small>
+    <button class="btn btn-primary form-control " (click)="renombrar()">Renombrar</button>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>
+
+<!--MODAL Copiar-->
+<ng-template #modalCopiar id="coiar" let-modal>
+  <ng-template #customLoadingTemplate></ng-template>
+
+  <ngx-loading [show]="loading2"
+    [config]="{'primaryColour': '#4c4f52', 'secondaryColour': '#4c4f52', 'tertiaryColour': '#4c4f52'}"
+    [template]="customLoadingTemplate"></ngx-loading>
+  <div class="modal-header">
+    <h4 class="modal-title">Copiar archivo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body"
+    style="overflow-y: scroll; max-height:30%;  margin-top: 0px; margin-bottom:0px;overflow-y: auto;">
+    <div class="form-group">
+      <label for="">Ingrese el nuevo nombre del archivo</label>
+      <input type="text" class="form-control" name="nombreArchivo" placeholder="" [(ngModel)]="nombreArchivo">
+    </div>
+    <small for="">Ruta archivo anterior:
+      "{{url_imagen+'/archivos/'+((carpetaSeleccionada.nombre=="")?archivoSeleccionado.nombre:carpetaSeleccionada.ruta+'/'+archivoSeleccionado.nombre)}}"</small>
+    <div class="form-group">
+      <label class="my-3" for="">Navegue y seleccione la carpeta destino de la copia</label>
+      <a style="cursor:pointer" (click)="raizCopia(carpetaStorage)" class="mostrar"
+        [class.active]="carpetaCopiaSeleccionada.nombre==carpetaStorage">
+        <fa-icon [icon]="faFolderOpen"></fa-icon>{{carpetaStorage}}
+      </a>
+      @for (carpetacopia of carpetasCopiar; track $index) {
+      <div class="carpeta2">
+        <a style="cursor:pointer" (click)="verCarpetasCopiar(carpetacopia,carpetaStorage)"
+          [class.active]="carpetaCopiaSeleccionada.nombre==carpetacopia.nombre" [class]="mostrarOcultar(carpetacopia)">
+          @if (carpetacopia.nombre!=carpetaCopiaSeleccionada.nombre &&
+          carpetacopia.nombre!=carpetaCopiaSeleccionada.padre) {
+          <fa-icon [icon]="faFolder"></fa-icon>
+          }
+
+          @if (carpetacopia.nombre==carpetaCopiaSeleccionada.nombre ||
+          carpetacopia.nombre==carpetaCopiaSeleccionada.padre) {
+          <fa-icon [icon]="faFolderOpen"></fa-icon>
+          }
+
+
+          <span> {{carpetacopia.nombre}} </span>
+          @if (carpetacopia.subCarpeta && carpetacopia.nombre!=carpetaCopiaSeleccionada.nombre &&
+          carpetacopia.nombre!=carpetaCopiaSeleccionada.padre) {
+          <fa-icon [icon]="faPlus"></fa-icon>
+          }
+
+          @if (carpetacopia.subCarpeta && carpetacopia.nombre==carpetaCopiaSeleccionada.nombre ||
+          carpetacopia.subCarpeta && carpetacopia.nombre==carpetaCopiaSeleccionada.padre) {
+          <fa-icon [icon]="faMinus"></fa-icon>
+          }
+        </a>
+      </div>
+      }
+    </div>
+
+    <button class="btn btn-primary form-control " (click)="copiar(carpetaStorage)">Copiar</button>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-inverse"
+      (click)="modal.dismiss('Cross click')">Cerrar</button></div>
+</ng-template>

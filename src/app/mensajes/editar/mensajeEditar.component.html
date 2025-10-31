@@ -1,0 +1,138 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+      'primaryColour': '#4c4f52',
+      'secondaryColour': '#4c4f52',
+      'tertiaryColour': '#4c4f52'
+    }" [template]="customLoadingTemplate"></ngx-loading>
+<!-- row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ titulo }}</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form class="m-t-0" #mensajeForm="ngForm">
+          <!--/row-->
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('nombre',1)">
+                <label class="control-label">Nombre * <small>{{validarError('nombre',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="mensaje.nombre" name="nombre" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-danger" [class]="validarError('asunto',1)">
+                <label class="control-label">Asunto * <small>{{validarError('asunto',2)}}</small></label>
+                <input type="text" class="form-control" [(ngModel)]="mensaje.asunto" name="asunto" placeholder="">
+              </div>
+            </div>
+
+          </div>
+
+
+          <!--/row-->
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <div class="form-group has-danger" [class]="validarError('contenido',1)">
+                <label class="control-label">Contenido * <small>{{validarError('contenido',2)}}</small></label>
+                <angular-editor placeholder="" [(ngModel)]="mensaje.contenido" name="contenido" [config]="editorConfig">
+                  <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+                    <ae-toolbar-set>
+                      <ae-button #botonFileManager iconClass="fa fa-folder" title="Administrador de archivos"
+                        (buttonClick)="fileManager(content,'contenido')"></ae-button>
+                      @if (imgSelected!='') {
+                      <ae-button #botonAgregar iconClass="fa fa-image" title="Agregar imagen"
+                        (buttonClick)="executeCommandFn('insertHtml', imgSelected)"></ae-button>
+                      }
+                    </ae-toolbar-set>
+                  </ng-template>
+                </angular-editor>
+              </div>
+            </div>
+          </div>
+
+          <!--/row-->
+          <div class="row pt-3">
+            <div class="col-md-12">
+              <div class="form-group has-danger">
+                <label class="control-label">Observaciones</label>
+                <textarea class="form-control" [(ngModel)]="mensaje.observacion" name="observacion" id="" cols="5"
+                  rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-md-6">
+              <div class="form-group" [class]="validarError('estado',1)">
+                <label class="control-label">Estado <small>{{validarError('estado',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="mensaje.estado" [compareWith]="compararEstado"
+                  name="estado" id="estado" tabindex="1">
+                  @for (estado of estados; track $index) {
+                  <option [ngValue]="estado">
+                    {{ estado.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group" [class]="validarError('clase',1)">
+                <label class="control-label">Clase <small>{{validarError('clase',2)}}</small></label>
+                <select class="form-select mr-sm-2" [(ngModel)]="mensaje.clase" [compareWith]="compararClase"
+                  name="clase" id="clase" tabindex="1">
+                  @for (clase of clases; track $index) {
+                  <option [ngValue]="clase">
+                    {{ clase.nombre }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            @if (mensaje.idMensaje>0) {
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Fecha de registro</label>
+                <input type="text" class="form-control" name="fecha" value="{{mensaje.fecha | date: 'dd/MM/yyyy'}}"
+                  disabled>
+              </div>
+            </div>
+            }
+          </div>
+
+          <div class="row pt-3">
+            <div class="d-flex gap-3">
+              <button type="submit" class="btn btn-primary" role="button" (click)='guardar()'>
+                <fa-icon [icon]="faCheck"></fa-icon>
+                Guardar</button>
+
+              <a [routerLink]="['/mensajes/lista']" class="btn btn-secondary">
+                <fa-icon [icon]="faArrowLeft"></fa-icon>
+                Regresar</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->
+
+<!--FileManager Modal-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-basic-title">Administrador de archivos</h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <file-manager></file-manager>
+  </div>
+</ng-template>

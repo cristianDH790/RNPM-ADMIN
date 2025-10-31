@@ -1,0 +1,134 @@
+//
+// Notifier Page
+//
+.notifier__container * {
+  box-sizing: border-box;
+}
+
+.notifier__container-list {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.notifier__notification {
+  display: block;
+  position: fixed;
+  visibility: hidden;
+  z-index: 10000;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+$notifier-shadow-color: rgba(0, 0, 0, 0.2) !default;
+
+.notifier__notification--material {
+  border-radius: 3px;
+  box-shadow: 0 1px 3px $notifier-shadow-color;
+  cursor: default; // Default cursor, even when hovering over text
+
+  padding: {
+    top: 11px;
+    right: 26px;
+    bottom: 10px;
+    left: 26px;
+  }
+
+  .notifier__notification {
+    &-message {
+      display: inline-block;
+
+      margin: {
+        // Reset paragraph default styles
+        top: 0;
+        bottom: 0;
+      }
+
+      vertical-align: top;
+      line-height: 32px;
+      font-size: 15px;
+    }
+
+    &-button {
+      display: inline-block;
+      transition: opacity 0.2s ease;
+      opacity: 0.5;
+
+      margin: {
+        right: -10px;
+        left: 10px;
+        top: -4px;
+      }
+
+      outline: none;
+      border: none;
+      background: none;
+      cursor: pointer; // Make it obvious that the "button" (or, more honestly, icon) is clickable (#UX)
+      padding: 6px;
+      width: 32px;
+      height: 32px;
+      vertical-align: top;
+
+      &:hover,
+      &:focus {
+        opacity: 1; // Make me "feel" the clickability with a transparency change (#UX)
+      }
+
+      &:active {
+        transform: scale(0.82); // Make me "feel" the click by a push back (#UX)
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.notifier__notification--default {
+  background-color: $primary;
+  color: $white;
+
+  .notifier__notification-button-icon {
+    // 16x16 fixed size
+    fill: $white;
+  }
+}
+
+.notifier__notification--info {
+  background-color: $info;
+  color: $white;
+
+  .notifier__notification-button-icon {
+    // 16x16 fixed size
+    fill: $white;
+  }
+}
+
+.notifier__notification--warning {
+  background-color: $warning;
+  color: $white;
+
+  .notifier__notification-button-icon {
+    // 16x16 fixed size
+    fill: $white;
+  }
+}
+
+.notifier__notification--success {
+  background-color: $success;
+  color: $white;
+
+  .notifier__notification-button-icon {
+    // 16x16 fixed size
+    fill: $white;
+  }
+}
+
+.notifier__notification--error {
+  background-color: $danger;
+  color: $white;
+
+  .notifier__notification-button-icon {
+    // 16x16 fixed size
+    fill: $white;
+  }
+}

@@ -1,0 +1,26 @@
+@if(paginator() && paginator()!.totalPages > 1){
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <span class="page-link"> {{paginator()?.numberOfElements}} de {{paginator()?.totalElements}} </span>
+    </li>
+    <li class="page-item">
+      <a href="javascript:void(0);" class="page-link" (click)="cambiarPagina(1)">Primera</a>
+    </li>
+    @if(paginator()!.number > 1){ <li class="page-item">
+      <a href="javascript:void(0);" class="page-link" (click)="cambiarPagina(paginator()!.number - 1)">«</a>
+    </li>
+    }
+    @for(pagina of paginas; track pagina; let index = $index){
+    <li class="page-item" [class.active]="pagina == paginator()?.number">
+      <a href="javascript:void(0);" class="page-link" (click)="cambiarPagina(pagina)">{{pagina}}</a>
+    </li>
+    }
+    @if(paginator()!.number < paginator()!.totalPages){ <li class="page-item">
+      <a href="javascript:void(0);" class="page-link" (click)="cambiarPagina(paginator()!.number + 1)">»</a>
+      </li>
+      }
+      <li class="page-item">
+        <a href="javascript:void(0);" class="page-link" (click)="cambiarPagina(paginator()!.totalPages)">Última</a>
+      </li>
+  </ul>
+  }

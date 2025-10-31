@@ -1,0 +1,146 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+    'primaryColour': '#4c4f52',
+    'secondaryColour': '#4c4f52',
+    'tertiaryColour': '#4c4f52'
+  }" [template]="customLoadingTemplate"></ngx-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Configuración base</h4>
+        <hr class="m-t-0 m-b-15">
+        <form #filtroForm="ngForm">
+          <div class="d-flex justify-content-start gap-3 bg-light border p-3 my-2 sli">
+            <div class="form-group">
+              <small id="name" class="form-text">Ordenar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="configuracionFiltro.ordenCriterio"
+                name="ordenCriterio">
+                <option value="nombre">Nombre</option>
+                <option value="idConfiguracion" selected>ID</option>
+                <option value="fecha">Fecha de registro</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="configuracionFiltro.ordenTipo"
+                name="ordenConfiguracion">
+                <option selected value="asc">Asc</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">Buscar por</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="configuracionFiltro.parametro"
+                name="configuracion">
+                <option value="nombre">Nombre</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <input type="text" class="form-control" [(ngModel)]="configuracionFiltro.valor" name="valor"
+                placeholder="">
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Tipo</small>
+              <select class="form-select  custom-select mr-sm-2" [(ngModel)]="configuracionFiltro.idPtipo"
+                name="idPtipo">
+                <option [ngValue]="0">Todos</option>
+                @for (ptipo of ptipos; track $index) {
+                <option [ngValue]="ptipo.idParametro">{{ ptipo.nombre }}
+                </option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar</button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start gap-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/configuraciones/editar']">
+            <fa-icon [icon]="faNewspaper"></fa-icon>
+            Nueva configuración</button>
+          <a [routerLink]="['/dashboard/inicio']" class="btn btn-secondary">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+
+            Regresar</a>
+
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th scope="col" style="width: 50px;"><a class="ng2-smart-sort-link sort">ID</a></th>
+                <th scope="col"><a class="ng2-smart-sort-link sort">Nombre</a></th>
+                <th scope="col"><a class="ng2-smart-sort-link sort">Valor</a></th>
+
+                <th scope="col" style="width: 130px;" class="text-center"><a class="ng2-smart-sort-link sort">Tipo</a>
+                </th>
+
+                <th scope="col" style="width: 110px;" class="text-center"><a class="ng2-smart-sort-link sort">Fecha</a>
+                </th>
+                <th scope="col" style="width: 70px;" class="text-right"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (configuracion of configuraciones; track $index) {
+              <tr>
+                <td>{{ configuracion.idConfiguracion }}</td>
+                <td>{{ configuracion.nombre }}</td>
+                <td>{{ configuracion.valor }}</td>
+                <td class="text-center">{{ configuracion.ptipo.nombre }} </td>
+
+                <td class="text-right">{{ configuracion.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/configuraciones/editar/', configuracion.idConfiguracion]" class="px-1"
+                    placement="left" ngbTooltip="Editar configuración">
+                    <fa-icon [icon]="faPencil"></fa-icon>
+                  </a>
+
+                  <!-- <a href="javascript:void(0);" (click)="eliminar(configuracion)" class="px-1" placement="left"
+                    ngbTooltip="Eliminar configuración">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a> -->
+
+                </td>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <td colspan="6">
+                  <p class="text-center">No hay configuraciones existentes.</p>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,156 @@
+<ng-template #customLoadingTemplate>
+
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{
+      'primaryColour': '#4c4f52',
+      'secondaryColour': '#4c4f52',
+      'tertiaryColour': '#4c4f52'
+    }" [template]="customLoadingTemplate"></ngx-loading>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de mensajes</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form #filtroForm="ngForm">
+          <div class="d-flex justify-content-start bg-light border p-3 gap-3 sli">
+            <div class="form-group">
+              <small id="name" class="form-text">Ordenar por</small>
+              <select class="form-select
+                                custom-select mr-sm-2" [(ngModel)]="mensajeFiltro.ordenCriterio" name="ordenCriterio">
+                <option value="nombre">Nombre</option>
+                <option value="idMensaje" selected>ID</option>
+                <option value="fecha">Fecha de registro</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="mensajeFiltro.ordenTipo"
+                name="ordenMensaje">
+                <option selected value="asc">Asc</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">Buscar por</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="mensajeFiltro.parametro" name="parametro">
+                <option value="nombre">Nombre</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <input type="text" class="form-control" [(ngModel)]="mensajeFiltro.valor" name="valor" placeholder="">
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estado</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="mensajeFiltro.idEstado" name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                @for (estado of estados; track $index) {
+                <option [ngValue]="estado.idEstado">{{ estado.nombre }}
+                </option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Clase</small>
+              <select class="form-select custom-select mr-sm-2" [(ngModel)]="mensajeFiltro.idClase" name="idClase">
+                <option [ngValue]="0">Todos</option>
+                @for (clase of clases; track $index) {
+                <option [ngValue]="clase.idClase">{{ clase.nombre }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar</button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start gap-3 my-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/mensajes/editar']">
+            <fa-icon [icon]="faNewspaper"></fa-icon>
+            Nuevo mensaje</button>
+          <a [routerLink]="['/dashboard/inicio']" class="btn btn-secondary"> <fa-icon [icon]="faArrowLeft"></fa-icon>
+
+            Regresar</a>
+          <div class="form-group">
+            <select class="form-select  custom-select float-right" [(ngModel)]="mensajeFiltro.registros"
+              name="registros" (ngModelChange)="actualizarPaginacion()">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th scope="col" style="width: 50px;"><a class="ng2-smart-sort-link sort">ID</a></th>
+                <th scope="col"><a class="ng2-smart-sort-link sort">Nombre</a></th>
+                <th scope="col" class="text-left"><a class="ng2-smart-sort-link sort">Asunto</a></th>
+                <th scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Estado</a></th>
+                <th scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Clase</a></th>
+                <th scope="col" class="text-center"><a class="ng2-smart-sort-link sort">Fecha</a></th>
+                <th scope="col" class="text-right"><a class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (mensaje of mensajes; track $index) {
+              <tr>
+                <td>{{ mensaje.idMensaje }}</td>
+                <td>{{ mensaje.nombre }}</td>
+                <td class="text-left">{{ mensaje.asunto }} </td>
+                <td class="text-center">{{ mensaje.estado.nombre }} </td>
+                <td class="text-center">{{ mensaje.clase.nombre }} </td>
+                <td class="text-center">{{ mensaje.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/mensajes/editar/', mensaje.idMensaje]" class="mx-2" placement="left"
+                    ngbTooltip="Editar mensaje">
+                    <fa-icon [icon]="faPencil"></fa-icon>
+
+                  </a>
+
+                  <a href="javascript:void(0);" (click)="eliminar(mensaje)" class="m-r-5 m-l-5" placement="left"
+                    ngbTooltip="Eliminar mensaje">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a>
+
+                </td>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <td colspan="7">
+                  <p class="text-center">No hay mensajes existentes.</p>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          <paginator class="d-flex justify-content-end" [paginator]="paginator()"
+            (childEvent)="cambiarPagina($event)" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

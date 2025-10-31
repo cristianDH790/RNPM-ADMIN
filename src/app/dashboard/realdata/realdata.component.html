@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-md-flex align-items-center">
+      <div>
+        <!-- <h4 class="card-title">Incidencias</h4> -->
+        <h5 class="card-subtitle"></h5>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-lg-2 col-md-2">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-info display-5" style="color: #1b5eaa !important;">
+              <fa-icon [icon]="faPersonCircleCheck"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Eventos</span>
+            <h3 class="font-medium mb-0">{{totalNoticias}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2">
+        <div class="d-flex align-items-center">
+          <div class="me-2">
+            <span class="text-info display-5" style="color: #1b5eaa !important;">
+              <fa-icon [icon]="faPersonCircleCheck"></fa-icon>
+            </span>
+          </div>
+          <div>
+            <span>Testimonios</span>
+            <h3 class="font-medium mb-0">{{totalTestimonios}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mt-3">
+  <div class="col-lg-12 col-md-12">
+    <div class="card card-hover w-100 ">
+      <div class="card-body" style="min-height: 400px;">
+        <div class="d-md-flex align-items-center">
+          <div>
+            <h4 class="card-title">RESUMEN MENSUAL </h4>
+          </div>
+        </div>
+        <div class="row mt-4 py-2">
+          <div class="col-lg-12">
+            <div class="mt-4 d-flex flex-column">
+              <apx-chart [series]="realdataChartOptions.series" [chart]="realdataChartOptions.chart"
+                [xaxis]="realdataChartOptions.xaxis" [yaxis]="realdataChartOptions.yaxis"
+                [grid]="realdataChartOptions.grid" [stroke]="realdataChartOptions.stroke"
+                [tooltip]="realdataChartOptions.tooltip" [dataLabels]="realdataChartOptions.dataLabels"
+                [legend]="realdataChartOptions.legend" [colors]="realdataChartOptions.colors"
+                [markers]="realdataChartOptions.markers">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

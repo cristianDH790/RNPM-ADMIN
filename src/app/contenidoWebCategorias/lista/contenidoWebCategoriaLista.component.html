@@ -1,0 +1,174 @@
+<ng-template #customLoadingTemplate></ng-template>
+
+<ngx-loading [show]="loading"
+  [config]="{ 'primaryColour': '#cd2a1f ', 'secondaryColour': '#cd2a1f ','tertiaryColour': '#cd2a1f '}"
+  [template]="customLoadingTemplate"></ngx-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="page-title">Gestión de categorías de contenidos web</h4>
+        <hr class="m-t-0 m-b-15">
+
+        <form #filtroForm="ngForm">
+          <div class="d-flex justify-content-start bg-light border p-3 gap-3 sli">
+            <div class="form-group">
+              <small id="name" class="form-text">Ordenar por</small>
+              <select class="form-control form-select custom-select mr-sm-2"
+                [(ngModel)]="contenidoWebCategoriaFiltro.ordenCriterio" name="ordenCriterio">
+                <option value="fecha">Fecha de registro</option>
+                <option value="nombre">Nombre</option>
+                <option value="orden">Orden</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <select class="form-control form-select custom-select mr-sm-2"
+                [(ngModel)]="contenidoWebCategoriaFiltro.ordenTipo" name="ordenTipo">
+                <option value="asc">Asc</option>
+                <option selected value="desc">Desc</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <small id="name" class="form-text">Buscar por</small>
+              <select class="form-control form-select custom-select mr-sm-2"
+                [(ngModel)]="contenidoWebCategoriaFiltro.parametro" name="parametro">
+                <option selected value="nombre">Nombre</option>
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">&nbsp;</small>
+              <input type="text" class="form-control" [(ngModel)]="contenidoWebCategoriaFiltro.valor" name="valor"
+                placeholder="">
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Estado</small>
+              <select class="form-control form-select custom-select mr-sm-2"
+                [(ngModel)]="contenidoWebCategoriaFiltro.idEstado" name="idEstado">
+                <option [ngValue]="0">Todos</option>
+                @for (estado of estados; track $index) {
+                <option [ngValue]="estado.idEstado">{{ estado.nombre }}
+                </option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group m-r-5">
+              <small id="name" class="form-text">Padre</small>
+              <select class="form-control form-select custom-select mr-sm-2"
+                [(ngModel)]="contenidoWebCategoriaFiltro.idRcontenidoWebCategoria" name="idRcontenidoWebCategoria">
+                <option [ngValue]="0">Todos</option>
+                @for (rcontenidoWebCategoria of rcontenidoWebCategorias; track $index) {
+                <option [ngValue]="rcontenidoWebCategoria.idContenidoWebCategoria">
+                  {{rcontenidoWebCategoria.nombre}}
+                </option>
+                }
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-primary" (click)="actualizar()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar
+              </button>
+            </div>
+            <div class="form-group">
+              <small id="name" class="form-text">&nbsp;</small>
+              <button type="button" class="form-control btn btn-secondary" (click)="restablecer()">
+                <fa-icon [icon]="faRefresh"></fa-icon>
+
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start gap-3 my-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/contenido-web-categoria/editar']">
+            <fa-icon [icon]="faList"></fa-icon>
+            Nueva categoría</button>
+
+          <a [routerLink]="['/dashboard/inicio']" class="btn btn-secondary"> <fa-icon [icon]="faArrowLeft"></fa-icon>
+
+            Regresar</a>
+          <div class="form-group">
+            <select class="form-control form-select custom-select float-right"
+              [(ngModel)]="contenidoWebCategoriaFiltro.registros" name="registros"
+              (ngModelChange)="actualizarPaginacion()">
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="thead-light">
+                <th style="width: 60px;" scope="col"><a style="cursor:pointer;" class="ng2-smart-sort-link sort">ID</a>
+                </th>
+                <th scope="col" class="text-left"><a style="cursor:pointer;" class="ng2-smart-sort-link sort">Nombre</a>
+                </th>
+                <th style="width: 120px;" scope="col" class="text-left"><a style="cursor:pointer;"
+                    class="ng2-smart-sort-link sort">Padre</a></th>
+                <th style="width: 80px; " scope="col" class="text-center"><a style="cursor:pointer;"
+                    class="ng2-smart-sort-link sort">Orden</a></th>
+                <th style="width: 100px;" scope="col" class="text-center"><a style="cursor:pointer;"
+                    class="ng2-smart-sort-link sort">Estado</a></th>
+                <th style="width: 100px;" scope="col" class="text-center"><a style="cursor:pointer;"
+                    class="ng2-smart-sort-link sort">Fecha</a></th>
+                <th style="width: 100px;" scope="col" class="text-right"><a style="cursor:pointer;"
+                    class="ng2-smart-sort-link sort"></a></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (contenidoWebCategoria of contenidoWebCategorias; track $index) {
+              <tr>
+
+                <td class="text-left">{{ contenidoWebCategoria.idContenidoWebCategoria }} </td>
+                <td class="text-left">{{ contenidoWebCategoria.nombre }}</td>
+                <td class="text-left">{{
+                  ((contenidoWebCategoria.rcontenidoWebCategoria)?contenidoWebCategoria.rcontenidoWebCategoria.nombre:"-")
+                  }} </td>
+                <td class="text-center">{{ contenidoWebCategoria.orden }} </td>
+                <td class="text-center">{{ contenidoWebCategoria.estado.nombre }} </td>
+                <td class="text-center">{{ contenidoWebCategoria.fecha | date:"dd/MM/yyyy" }}</td>
+                <td class="text-end">
+                  <a [routerLink]="['/contenido-web-categoria/editar/', contenidoWebCategoria.idContenidoWebCategoria]"
+                    class="mx-3" placement="top" ngbTooltip="Editar categoría de contenido web ">
+                    <fa-icon [icon]="faPencil"></fa-icon>
+                  </a>
+
+                  <a href="javascript:void(0);" (click)="eliminar(contenidoWebCategoria)" class="m-r-5 m-l-5"
+                    placement="top" ngbTooltip="Eliminar categoría de contenido web">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </a>
+
+                </td>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <td colspan="11">
+                  <p class="text-center">No hay categorías existentes.</p>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          <!-- <paginator [paginator]="paginator()" (childEvent)="cambiarPagina($event)" /> -->
+  <paginator class="d-flex justify-content-end" [paginator]="paginator()" (childEvent)="cambiarPagina($event)" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,224 @@
+//Buttons
+
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+
+  &.btn-sm {
+    width: 35px;
+    height: 35px;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  &.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 14px 15px;
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+  &.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 14px 15px;
+    font-size: 24px;
+  }
+}
+
+.btn-rounded {
+  border-radius: 60px;
+  padding: 7px 18px;
+
+  &.btn-lg {
+    padding: 0.75rem 1.5rem;
+  }
+
+  &.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 12px;
+  }
+
+  &.btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+  }
+
+  &.btn-md {
+    padding: 12px 35px;
+    font-size: 16px;
+  }
+}
+
+.btn-primary,
+.btn-info,
+.btn-default,
+.btn-warning,
+.btn-success,
+.btn-danger,
+.btn-outline-primary:hover,
+.btn-check:checked + .btn-outline-primary,
+.btn-check:checked + .btn-outline-warning,
+.btn-check:checked + .btn-outline-success,
+.btn-check:checked + .btn-outline-danger,
+.btn-outline-warning:hover,
+.btn-outline-danger:hover,
+.btn-outline-info:hover,
+.btn-outline-success:hover,
+.btn-primary.active,
+.btn-info.active,
+.btn-info:focus,
+.btn-info:disabled,
+.btn-success:disabled,
+.btn-primary:disabled,
+.btn-danger.active,
+.btn-success.active,
+.btn-success:focus,
+.btn-danger:focus,
+.btn-primary:focus,
+.show > .btn-danger.dropdown-toggle,
+.show > .btn-primary.dropdown-toggle,
+.show > .btn-info.dropdown-toggle,
+.show > .btn-success.dropdown-toggle,
+.show > .btn-warning.dropdown-toggle {
+  color: $white;
+  &:hover {
+    color: $white;
+  }
+}
+
+.btn-default {
+  background-color: $info;
+}
+
+.button-group {
+  .btn {
+    margin-bottom: 8px;
+    margin-right: 8px;
+  }
+}
+
+.no-button-group .btn {
+  margin-bottom: 5px;
+  margin-right: 0px;
+}
+
+.btn .text-active {
+  display: none;
+}
+
+.btn.active .text-active {
+  display: inline-block;
+}
+
+.btn.active .text {
+  display: none;
+}
+
+button:disabled {
+  opacity: 0.65;
+}
+
+// ------------------------------------------
+// radio
+// ------------------------------------------
+.btn-group-toggle > .btn-group > .btn input[type="checkbox"],
+.btn-group-toggle > .btn-group > .btn input[type="radio"],
+.btn-group-toggle > .btn input[type="checkbox"],
+.btn-group-toggle > .btn input[type="radio"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
+
+// ------------------------------------------
+// Light Color Button Hover effect
+// ------------------------------------------
+.btn-light-primary {
+  &:hover {
+    background-color: $primary;
+    border-color: $primary;
+    color: $white !important;
+    svg,
+    i {
+      color: $white !important;
+    }
+  }
+}
+
+.btn-light-secondary {
+  &:hover {
+    background-color: $secondary;
+    border-color: $secondary;
+    color: $white !important;
+    svg,
+    i {
+      color: $white !important;
+    }
+  }
+  &:focus,
+  &.focus:hover {
+    color: $secondary;
+  }
+}
+
+.btn-light-success {
+  &:hover {
+    background-color: $success;
+    border-color: $success;
+    color: $white !important;
+    svg,
+    i {
+      color: $white !important;
+    }
+  }
+}
+
+.btn-light-info {
+  &:hover {
+    background-color: $info;
+    border-color: $info;
+    color: $white !important;
+    svg,
+    i {
+      color: $white !important;
+    }
+  }
+}
+
+.btn-light-warning {
+  &:hover {
+    background-color: $warning;
+    border-color: $warning;
+    color: $white !important;
+    svg,
+    i {
+      color: $white !important;
+    }
+  }
+}
+
+.btn-light-danger {
+  &:hover {
+    background-color: $danger;
+    border-color: $danger;
+    color: $white !important;
+    svg,
+    i {
+      color: $white !important;
+    }
+  }
+}
+
+.dropdown-toggle-icon-none {
+  &.dropdown-toggle::after {
+    display: none;
+  }
+}
+
+.featured-btn {
+  position: absolute;
+  right: 20px;
+}

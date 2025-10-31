@@ -1,0 +1,15 @@
+.modal-header{position: relative !important;}
+.modal-header h3{display: inline-block;margin: 0;}
+.modal-header .btn-close {
+  padding: 0px !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  position: absolute !important;
+  right: 15px !important;
+  top: 10px !important;
+  background-color: #db3636;
+  height: 35px;
+  width: 35px;
+  font-size: 10px;
+  opacity: 1 !important;
+}
